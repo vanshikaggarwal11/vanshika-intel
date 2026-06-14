@@ -271,17 +271,18 @@ var WL=[
   {t:'ICLN',n:'iShares Clean Energy ETF',c:'etf',r:'med',w:'100+ clean energy companies diversified',s:'Clean ETF'},
 ];
 var CHG={AMZN:'+1.2%',MSFT:'+0.8%',NVDA:'+3.1%',GOOGL:'-0.4%',UPS:'-0.7%',FDX:'+0.3%',DAL:'+1.8%',NEE:'-0.5%',ENPH:'+2.4%',TSLA:'+1.1%',BEP:'-0.2%',VOO:'+0.6%',XLI:'+0.4%',ICLN:'+1.7%'};
+var LOGIC={AMZN:'Pre-earnings momentum; analysts raised targets citing AWS acceleration',MSFT:'Azure AI adoption beat; Copilot seat growth ahead of internal forecasts',NVDA:'Record $26B datacenter revenue; full-year guidance raised above consensus',GOOGL:'DOJ antitrust ruling overhang; investors pricing in remedy uncertainty',UPS:'FedEx earnings miss created sector read-through; sympathy selling',FDX:'Slight bounce after -8% guidance cut; some investors buying the dip',DAL:'Q3 profit outlook raised; summer international bookings up 12%',NEE:'IRA credit review uncertainty; mild rate-sensitivity selling',ENPH:'Better solar installation data; Fed rate cut signal boosted growth names',TSLA:'EV sentiment recovery; Fed rate cut lowers consumer financing costs',BEP:'Dividend consolidation after rate-cut rally; stable yield holding floor',VOO:'Broad Fed rate cut signal lifted S&P 500 across sectors',XLI:'Positive macro sentiment; industrials rallied on Fed dovish signal',ICLN:'Rate-sensitive clean energy surged on Fed rate cut announcement'};
 var NEWS=[
-  {id:1,c:'tech',h:'Nvidia reports record datacenter revenue, raises guidance',s:'Nvidia beat Q2 expectations with $26B in datacenter revenue driven by AI chip demand. The company raised full-year guidance, sending the stock up 3% after hours.',sent:'Positive',time:'2h ago',tk:['NVDA'],rel:'Core to your AI-focused holdings'},
-  {id:2,c:'logistics',h:'Amazon Air Cargo expands capacity on key West Coast routes',s:'Amazon Air announced expansion with 12 new routes from Seattle and LAX. This directly affects ACAR competitive dynamics and digital booking demand.',sent:'Positive',time:'4h ago',tk:['AMZN'],rel:'Directly relevant to your work at ACAR'},
-  {id:3,c:'macro',h:'Federal Reserve signals two more rate cuts in 2026',s:'Fed Chair signaled a dovish pivot with 50bps of cuts by year-end. Lower rates are bullish for growth stocks and clean energy companies.',sent:'Positive',time:'5h ago',tk:['NEE','ENPH','TSLA'],rel:'Affects your clean energy picks heavily'},
-  {id:4,c:'energy',h:'Inflation Reduction Act clean energy credits face congressional review',s:'Congressional review of IRA tax credits created uncertainty for solar and wind developers. Enphase and NextEra saw selling pressure.',sent:'Negative',time:'6h ago',tk:['NEE','ENPH','ICLN'],rel:'Policy risk on your clean energy positions'},
-  {id:5,c:'logistics',h:'FedEx misses earnings, cuts volume guidance for 2026',s:'FedEx reported Q2 earnings below consensus, citing softness in international air freight. Volume guidance cut 8% — a potential read-through to air cargo demand.',sent:'Negative',time:'8h ago',tk:['FDX','UPS'],rel:'Industry signal for ACAR and your logistics picks'},
-  {id:6,c:'tech',h:'Microsoft Azure revenue grows 33% on AI workload demand',s:'Azure cloud segment accelerated growth, driven by enterprise AI adoption. Microsoft now has 85% of Fortune 500 using at least one Azure AI service.',sent:'Positive',time:'10h ago',tk:['MSFT'],rel:'Strong fundamental signal for your MSFT holding'},
-  {id:7,c:'macro',h:'US GDP growth slows to 1.4% in Q1 — below expectations',s:'GDP growth missed the 2.1% consensus, raising mild recession concerns. Defensive sectors outperformed on the news.',sent:'Negative',time:'1d ago',tk:['VOO'],rel:'Macro context for your index ETF holdings'},
-  {id:8,c:'energy',h:'Clean energy installations hit record globally in H1 2026',s:'Solar and wind installations broke records, with the US leading capacity additions. This supports long-term thesis for NEE, BEP, and ICLN.',sent:'Positive',time:'1d ago',tk:['NEE','BEP','ICLN'],rel:'Long-term tailwind for your clean energy picks'},
-  {id:9,c:'tech',h:'Alphabet faces DOJ antitrust ruling on search monopoly',s:'A federal judge ruled Alphabet illegally maintained its search monopoly. Shares fell 4% as investors weighed potential forced divestitures.',sent:'Negative',time:'1d ago',tk:['GOOGL'],rel:'Regulatory risk — watch before adding to GOOGL'},
-  {id:10,c:'logistics',h:'Delta Air reports strong summer bookings, raises profit outlook',s:'Delta saw 12% increase in summer bookings on international routes. Fuel costs remained manageable, driving a raised Q3 earnings outlook.',sent:'Positive',time:'2d ago',tk:['DAL'],rel:'Positive signal for your DAL holding'},
+  {id:1,c:'tech',h:'Nvidia reports record datacenter revenue, raises guidance',s:'Nvidia beat Q2 expectations with $26B in datacenter revenue driven by AI chip demand. The company raised full-year guidance, sending the stock up 3% after hours.',sent:'Positive',time:'2h ago',tk:['NVDA'],rel:'Core to your AI-focused holdings',src:'Reuters',url:'https://www.reuters.com/technology/'},
+  {id:2,c:'logistics',h:'Amazon Air Cargo expands capacity on key West Coast routes',s:'Amazon Air announced expansion with 12 new routes from Seattle and LAX. This directly affects ACAR competitive dynamics and digital booking demand.',sent:'Positive',time:'4h ago',tk:['AMZN'],rel:'Directly relevant to your work at ACAR',src:'Bloomberg',url:'https://www.bloomberg.com/technology'},
+  {id:3,c:'macro',h:'Federal Reserve signals two more rate cuts in 2026',s:'Fed Chair signaled a dovish pivot with 50bps of cuts by year-end. Lower rates are bullish for growth stocks and clean energy companies.',sent:'Positive',time:'5h ago',tk:['NEE','ENPH','TSLA'],rel:'Affects your clean energy picks heavily',src:'Wall Street Journal',url:'https://www.wsj.com/economy/central-banking'},
+  {id:4,c:'energy',h:'Inflation Reduction Act clean energy credits face congressional review',s:'Congressional review of IRA tax credits created uncertainty for solar and wind developers. Enphase and NextEra saw selling pressure.',sent:'Negative',time:'6h ago',tk:['NEE','ENPH','ICLN'],rel:'Policy risk on your clean energy positions',src:'Financial Times',url:'https://www.ft.com/energy'},
+  {id:5,c:'logistics',h:'FedEx misses earnings, cuts volume guidance for 2026',s:'FedEx reported Q2 earnings below consensus, citing softness in international air freight. Volume guidance cut 8% — a potential read-through to air cargo demand.',sent:'Negative',time:'8h ago',tk:['FDX','UPS'],rel:'Industry signal for ACAR and your logistics picks',src:'CNBC',url:'https://www.cnbc.com/transportation/'},
+  {id:6,c:'tech',h:'Microsoft Azure revenue grows 33% on AI workload demand',s:'Azure cloud segment accelerated growth, driven by enterprise AI adoption. Microsoft now has 85% of Fortune 500 using at least one Azure AI service.',sent:'Positive',time:'10h ago',tk:['MSFT'],rel:'Strong fundamental signal for your MSFT holding',src:'Bloomberg',url:'https://www.bloomberg.com/technology'},
+  {id:7,c:'macro',h:'US GDP growth slows to 1.4% in Q1 — below expectations',s:'GDP growth missed the 2.1% consensus, raising mild recession concerns. Defensive sectors outperformed on the news.',sent:'Negative',time:'1d ago',tk:['VOO'],rel:'Macro context for your index ETF holdings',src:'MarketWatch',url:'https://www.marketwatch.com/economy-politics/'},
+  {id:8,c:'energy',h:'Clean energy installations hit record globally in H1 2026',s:'Solar and wind installations broke records, with the US leading capacity additions. This supports long-term thesis for NEE, BEP, and ICLN.',sent:'Positive',time:'1d ago',tk:['NEE','BEP','ICLN'],rel:'Long-term tailwind for your clean energy picks',src:'Financial Times',url:'https://www.ft.com/energy'},
+  {id:9,c:'tech',h:'Alphabet faces DOJ antitrust ruling on search monopoly',s:'A federal judge ruled Alphabet illegally maintained its search monopoly. Shares fell 4% as investors weighed potential forced divestitures.',sent:'Negative',time:'1d ago',tk:['GOOGL'],rel:'Regulatory risk — watch before adding to GOOGL',src:'Wall Street Journal',url:'https://www.wsj.com/tech/'},
+  {id:10,c:'logistics',h:'Delta Air reports strong summer bookings, raises profit outlook',s:'Delta saw 12% increase in summer bookings on international routes. Fuel costs remained manageable, driving a raised Q3 earnings outlook.',sent:'Positive',time:'2d ago',tk:['DAL'],rel:'Positive signal for your DAL holding',src:'Reuters',url:'https://www.reuters.com/business/aerospace-defense/'},
 ];
 var LESSONS=[
   {wk:1,d:1,t:'What is a stock?',s:'Ownership basics',done:true},
@@ -330,7 +331,8 @@ function buildHome(){
   var strip=document.getElementById('tstrip');
   strip.innerHTML=['AMZN','MSFT','NVDA','GOOGL','UPS','NEE','TSLA','VOO'].map(function(t){
     var chg=CHG[t]||'+0.0%';var up=chg[0]==='+';
-    return '<div class="tpill" onclick="openStock(\''+t+'\')"><div class="tp-s">'+t+'</div><div class="tp-c '+(up?'up':'dn')+'">'+chg+'</div></div>';
+    var lg=LOGIC[t]||'';
+    return '<div class="tpill" onclick="openStock(\''+t+'\')" title="'+lg+'"><div class="tp-s">'+t+'</div><div class="tp-c '+(up?'up':'dn')+'">'+chg+'</div></div>';
   }).join('');
 
   // industry cards
@@ -363,9 +365,11 @@ function ncHTML(n){
     '<span class="nc-time">'+n.time+'</span></div>'+
     '<div class="nc-hl">'+n.h+'</div>'+
     '<div class="nc-sm">'+n.s+'</div>'+
-    '<div style="display:flex;align-items:center;">'+
-    '<span class="sent '+sc+'">'+si+' '+n.sent+'</span>'+
-    '<span class="nc-rel">'+n.rel+'</span></div></div>';
+    '<div style="display:flex;align-items:center;justify-content:space-between;">'+
+    '<div style="display:flex;align-items:center;gap:6px;"><span class="sent '+sc+'">'+si+' '+n.sent+'</span>'+
+    '<span class="nc-rel">'+n.rel+'</span></div>'+
+    (n.src?'<span style="font-size:10px;color:var(--acc);font-weight:600;">'+n.src+'</span>':'')+
+    '</div></div>';
 }
 
 // NEWS PAGE
@@ -397,8 +401,9 @@ function renderWL(){
     return '<div class="wl-row" onclick="openStock(\''+w.t+'\')">'+
       '<span class="wl-sym">'+w.t+'</span>'+
       '<div class="wl-info"><div class="wl-nm">'+w.n+'</div><div class="wl-w">'+w.w+'</div></div>'+
-      '<div class="wl-rt"><div class="wl-chg '+(up?'up':'dn')+'">'+chg+'</div>'+
-      '<span class="rb '+rc[w.r]+'">'+rl[w.r]+'</span></div></div>';
+      '<div class="wl-rt" style="text-align:right;max-width:120px;"><div class="wl-chg '+(up?'up':'dn')+'">'+chg+'</div>'+
+      '<span class="rb '+rc[w.r]+'">'+rl[w.r]+'</span></div></div>'+
+      '<div style="font-size:10px;color:var(--t3);padding:3px 16px 8px;border-bottom:0.5px solid var(--b);line-height:1.4;">'+(LOGIC[w.t]||'')+'</div>';
   }).join('');
 }
 function setWF(c){curWF=c;renderWL();}
@@ -520,9 +525,11 @@ function renderStock(st,d){
 function renderNewsDetail(n,d){
   var sc={Positive:'s-pos',Negative:'s-neg',Neutral:'s-neu'}[n.sent]||'s-neu';
   document.getElementById('dp-body').innerHTML=
-    '<div class="ds"><span class="cat-tag ct-'+n.c+'">'+n.c+'</span> <span style="font-size:11px;color:var(--t3);">'+n.time+'</span>'+
-    '<div style="font-size:15px;font-weight:600;color:var(--t);line-height:1.4;margin:8px 0 6px;">'+n.h+'</div>'+
-    '<div style="font-size:13px;color:var(--t2);line-height:1.5;">'+n.s+'</div></div>'+
+    '<div class="ds"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><span class="cat-tag ct-'+n.c+'">'+n.c+'</span><span style="font-size:11px;color:var(--t3);">'+n.time+'</span></div>'+
+    '<div style="font-size:15px;font-weight:600;color:var(--t);line-height:1.4;margin-bottom:6px;">'+n.h+'</div>'+
+    '<div style="font-size:13px;color:var(--t2);line-height:1.5;margin-bottom:8px;">'+n.s+'</div>'+
+    (n.src&&n.url?'<a href="'+n.url+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--acc);text-decoration:none;background:rgba(79,142,247,0.1);border:0.5px solid rgba(79,142,247,0.25);border-radius:8px;padding:3px 9px;font-weight:600;">📰 '+n.src+' ↗</a>':'')+
+    '</div>'+
     '<div class="ds"><div class="ds-t">Why this matters</div><div class="db"><p>'+(d.why_matters||'—')+'</p></div></div>'+
     '<div class="ds"><div class="ds-t">Immediate market impact</div><div class="db"><p>'+(d.immediate_impact||'—')+'</p></div></div>'+
     '<div class="ds"><div class="ds-t">Historical parallel</div><div class="db" style="background:var(--pubg);border-color:rgba(123,92,240,0.2);"><p>'+(d.historical_parallel||'—')+'</p></div></div>'+
