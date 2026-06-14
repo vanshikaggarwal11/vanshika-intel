@@ -2,1050 +2,561 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vanshika — Market Intelligence</title>
 <style>
-  :root {
-    --bg: #0d0f12;
-    --bg2: #13161b;
-    --bg3: #1a1e26;
-    --bg4: #222730;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.12);
-    --text: #f0f2f5;
-    --text2: #8b92a0;
-    --text3: #545c6b;
-    --accent: #4f8ef7;
-    --accent2: #7b5cf0;
-    --green: #2ecc71;
-    --green-bg: rgba(46,204,113,0.1);
-    --green-border: rgba(46,204,113,0.25);
-    --red: #e74c3c;
-    --red-bg: rgba(231,76,60,0.1);
-    --red-border: rgba(231,76,60,0.25);
-    --amber: #f0a500;
-    --amber-bg: rgba(240,165,0,0.1);
-    --teal: #1abc9c;
-    --teal-bg: rgba(26,188,156,0.1);
-    --purple: #7b5cf0;
-    --purple-bg: rgba(123,92,240,0.1);
-    --radius: 12px;
-    --radius-sm: 8px;
-    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-  }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0d0f12;--bg2:#13161b;--bg3:#1a1e26;--bg4:#222730;
+  --b:rgba(255,255,255,0.07);--b2:rgba(255,255,255,0.13);
+  --t:#f0f2f5;--t2:#8b92a0;--t3:#545c6b;
+  --acc:#4f8ef7;--acc2:#7b5cf0;
+  --g:#2ecc71;--gbg:rgba(46,204,113,0.1);--gb:rgba(46,204,113,0.25);
+  --r:#e74c3c;--rbg:rgba(231,76,60,0.1);--rb:rgba(231,76,60,0.25);
+  --am:#f0a500;--ambg:rgba(240,165,0,0.1);
+  --tl:#1abc9c;--tlbg:rgba(26,188,156,0.1);
+  --pu:#7b5cf0;--pubg:rgba(123,92,240,0.1);
+  --rad:12px;--rads:8px;
+}
+body{background:var(--bg);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:70px;-webkit-font-smoothing:antialiased}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(13,15,18,0.94);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--b);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.tb-name{font-size:16px;font-weight:700;color:var(--t);letter-spacing:-0.02em}
+.tb-sub{font-size:11px;color:var(--t3);margin-top:1px}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    min-height: 100vh;
-    max-width: 480px;
-    margin: 0 auto;
-    padding-bottom: 80px;
-    -webkit-font-smoothing: antialiased;
-  }
+/* BOTTOM NAV */
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(13,15,18,0.96);backdrop-filter:blur(16px);border-top:0.5px solid var(--b);display:flex;z-index:50}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 10px;cursor:pointer;gap:3px;border:none;background:transparent}
+.ni-ico{font-size:19px;color:var(--t3)}
+.ni-lbl{font-size:10px;color:var(--t3);letter-spacing:0.02em}
+.ni.on .ni-ico,.ni.on .ni-lbl{color:var(--acc)}
 
-  /* TOP BAR */
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(13,15,18,0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 0.5px solid var(--border);
-    padding: 14px 16px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .topbar-left { display: flex; flex-direction: column; }
-  .topbar-greeting { font-size: 11px; color: var(--text3); letter-spacing: 0.04em; }
-  .topbar-name { font-size: 17px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
-  .topbar-right { display: flex; align-items: center; gap: 10px; }
-  .avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: white; }
-  .notif-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+/* PAGES */
+.pg{display:none}
+.pg.on{display:block}
 
-  /* NAV */
-  .nav {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 480px;
-    background: rgba(13,15,18,0.95);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 0.5px solid var(--border);
-    display: flex;
-    z-index: 100;
-  }
-  .nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 0 12px;
-    cursor: pointer;
-    gap: 4px;
-    transition: opacity 0.15s;
-  }
-  .nav-icon { font-size: 20px; color: var(--text3); transition: color 0.15s; }
-  .nav-label { font-size: 10px; color: var(--text3); transition: color 0.15s; letter-spacing: 0.02em; }
-  .nav-item.active .nav-icon,
-  .nav-item.active .nav-label { color: var(--accent); }
+/* GENERIC */
+.sec{padding:14px 16px 0}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sec-t{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.07em}
+.sec-a{font-size:12px;color:var(--acc);cursor:pointer;background:none;border:none;font-family:inherit}
+.card{background:var(--bg2);border:0.5px solid var(--b);border-radius:var(--rad);padding:13px;margin-bottom:9px;cursor:pointer;transition:background 0.1s}
+.card:active{background:var(--bg3)}
 
-  /* PAGES */
-  .page { display: none; padding: 0 0 16px; }
-  .page.active { display: block; }
+/* TICKER STRIP */
+.tstrip{display:flex;gap:7px;padding:11px 16px;overflow-x:auto;scrollbar-width:none}
+.tstrip::-webkit-scrollbar{display:none}
+.tpill{flex-shrink:0;background:var(--bg2);border:0.5px solid var(--b);border-radius:20px;padding:5px 11px;cursor:pointer;text-align:center;min-width:66px}
+.tpill:active,.tpill.on{border-color:var(--acc);background:rgba(79,142,247,0.09)}
+.tp-s{font-size:12px;font-weight:700;color:var(--t)}
+.tp-c{font-size:11px;margin-top:1px}
+.up{color:var(--g)}.dn{color:var(--r)}
 
-  /* SECTION */
-  .section { padding: 16px 16px 0; }
-  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .section-title { font-size: 13px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.07em; }
-  .section-action { font-size: 12px; color: var(--accent); cursor: pointer; }
+/* NEWS CARD */
+.nc-meta{display:flex;align-items:center;gap:6px;margin-bottom:7px}
+.cat-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:0.05em}
+.ct-tech{background:rgba(79,142,247,0.15);color:#7baef7}
+.ct-logistics{background:var(--ambg);color:var(--am)}
+.ct-energy{background:var(--tlbg);color:var(--tl)}
+.ct-macro{background:var(--pubg);color:var(--pu)}
+.ct-personal{background:var(--gbg);color:var(--g)}
+.nc-time{font-size:11px;color:var(--t3);margin-left:auto}
+.nc-hl{font-size:14px;font-weight:600;color:var(--t);line-height:1.4;margin-bottom:5px}
+.nc-sm{font-size:12px;color:var(--t2);line-height:1.5;margin-bottom:7px}
+.sent{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:10px}
+.s-pos{background:var(--gbg);color:var(--g);border:0.5px solid var(--gb)}
+.s-neg{background:var(--rbg);color:var(--r);border:0.5px solid var(--rb)}
+.s-neu{background:var(--bg3);color:var(--t3);border:0.5px solid var(--b)}
+.nc-rel{font-size:11px;color:var(--t3);margin-left:7px;font-style:italic}
 
-  /* CARDS */
-  .card {
-    background: var(--bg2);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    position: relative;
-    overflow: hidden;
-  }
-  .card:active { background: var(--bg3); }
-  .card.loading { pointer-events: none; }
+/* WATCHLIST */
+.wl-filters{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;scrollbar-width:none}
+.wl-filters::-webkit-scrollbar{display:none}
+.wf{flex-shrink:0;padding:5px 12px;border:0.5px solid var(--b2);border-radius:20px;font-size:12px;cursor:pointer;color:var(--t3);background:transparent;font-family:inherit}
+.wf.on{border-color:var(--acc);color:var(--acc);background:rgba(79,142,247,0.09)}
+.wl-row{display:flex;align-items:center;padding:12px 16px;gap:11px;border-bottom:0.5px solid var(--b);cursor:pointer;transition:background 0.1s}
+.wl-row:active{background:var(--bg2)}
+.wl-sym{font-size:14px;font-weight:700;color:var(--t);min-width:48px}
+.wl-info{flex:1;min-width:0}
+.wl-nm{font-size:12px;color:var(--t2)}
+.wl-w{font-size:11px;color:var(--t3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wl-rt{text-align:right;flex-shrink:0}
+.wl-chg{font-size:13px;font-weight:600}
+.rb{font-size:10px;font-weight:600;padding:2px 6px;border-radius:10px;margin-top:3px;display:inline-block}
+.rl{background:var(--gbg);color:var(--g)}.rm{background:var(--ambg);color:var(--am)}.rh{background:var(--rbg);color:var(--r)}
 
-  /* MARKET TICKER STRIP */
-  .ticker-strip {
-    display: flex;
-    gap: 8px;
-    padding: 12px 16px;
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .ticker-strip::-webkit-scrollbar { display: none; }
-  .ticker-pill {
-    flex-shrink: 0;
-    background: var(--bg2);
-    border: 0.5px solid var(--border);
-    border-radius: 20px;
-    padding: 6px 12px;
-    cursor: pointer;
-    transition: border-color 0.15s;
-    min-width: 72px;
-    text-align: center;
-  }
-  .ticker-pill:active { border-color: var(--accent); }
-  .ticker-pill.active { border-color: var(--accent); background: rgba(79,142,247,0.08); }
-  .tp-sym { font-size: 12px; font-weight: 600; color: var(--text); }
-  .tp-chg { font-size: 11px; margin-top: 2px; }
-  .tp-chg.up { color: var(--green); }
-  .tp-chg.down { color: var(--red); }
+/* LEARN */
+.lp-box{margin:14px 16px 0;background:var(--bg2);border:0.5px solid var(--b);border-radius:var(--rad);padding:13px}
+.lp-hd{display:flex;justify-content:space-between;margin-bottom:8px}
+.lp-t{font-size:13px;font-weight:600;color:var(--t)}
+.lp-pct{font-size:13px;font-weight:600;color:var(--acc)}
+.lp-bar{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden}
+.lp-fill{height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:2px}
+.lp-sub{font-size:11px;color:var(--t3);margin-top:6px}
+.lc{background:var(--bg2);border:0.5px solid var(--b);border-radius:var(--rad);padding:13px;margin:10px 16px 0;cursor:pointer;transition:background 0.1s}
+.lc:active{background:var(--bg3)}
+.lc-meta{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.lc-wk{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.06em}
+.lc-done{font-size:10px;padding:2px 7px;border-radius:10px;background:var(--gbg);color:var(--g);margin-left:auto}
+.lc-next{font-size:10px;padding:2px 7px;border-radius:10px;background:rgba(79,142,247,0.13);color:var(--acc);margin-left:auto}
+.lc-t{font-size:14px;font-weight:600;color:var(--t);margin-bottom:3px}
+.lc-s{font-size:12px;color:var(--t3)}
 
-  /* NEWS CARD */
-  .news-card-inner { }
-  .nc-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-  .nc-cat { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
-  .cat-tech { background: rgba(79,142,247,0.15); color: #7baef7; }
-  .cat-logistics { background: var(--amber-bg); color: var(--amber); }
-  .cat-energy { background: var(--teal-bg); color: var(--teal); }
-  .cat-macro { background: var(--purple-bg); color: var(--purple); }
-  .cat-personal { background: rgba(46,204,113,0.12); color: var(--green); }
-  .nc-time { font-size: 11px; color: var(--text3); margin-left: auto; }
-  .nc-headline { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 6px; }
-  .nc-summary { font-size: 13px; color: var(--text2); line-height: 1.5; margin-bottom: 8px; }
-  .nc-sentiment { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 8px; border-radius: 10px; }
-  .sent-pos { background: var(--green-bg); color: var(--green); border: 0.5px solid var(--green-border); }
-  .sent-neg { background: var(--red-bg); color: var(--red); border: 0.5px solid var(--red-border); }
-  .sent-neu { background: var(--bg3); color: var(--text3); border: 0.5px solid var(--border); }
-  .nc-relevance { font-size: 11px; color: var(--text3); margin-left: 8px; font-style: italic; }
+/* SEARCH */
+.srch{padding:10px 16px}
+.srch-box{display:flex;align-items:center;gap:8px;background:var(--bg2);border:0.5px solid var(--b2);border-radius:10px;padding:9px 12px}
+.srch-box input{flex:1;background:transparent;border:none;outline:none;font-size:14px;color:var(--t);font-family:inherit}
+.srch-box input::placeholder{color:var(--t3)}
 
-  /* STOCK CARD */
-  .stock-card-inner { display: flex; align-items: flex-start; gap: 12px; }
-  .sc-left { flex: 1; }
-  .sc-ticker { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
-  .sc-name { font-size: 12px; color: var(--text3); margin-top: 2px; }
-  .sc-why { font-size: 12px; color: var(--text2); margin-top: 8px; line-height: 1.4; }
-  .sc-right { text-align: right; }
-  .sc-forecast { font-size: 11px; color: var(--text3); margin-top: 4px; }
-  .sc-forecast span { color: var(--green); font-weight: 500; }
-  .sc-forecast span.down { color: var(--red); }
-  .risk-badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; margin-top: 6px; display: inline-block; }
-  .risk-low { background: var(--green-bg); color: var(--green); }
-  .risk-med { background: var(--amber-bg); color: var(--amber); }
-  .risk-high { background: var(--red-bg); color: var(--red); }
+/* PROFILE */
+.pr-hd{padding:18px 16px;display:flex;align-items:center;gap:13px;border-bottom:0.5px solid var(--b)}
+.pr-av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
+.pr-name{font-size:18px;font-weight:700;color:var(--t);letter-spacing:-0.02em}
+.pr-role{font-size:12px;color:var(--t3);margin-top:2px}
+.pr-row{display:flex;align-items:center;padding:13px 16px;gap:11px;border-bottom:0.5px solid var(--b)}
+.pr-ico{font-size:17px;width:22px;text-align:center;flex-shrink:0}
+.pr-lbl{font-size:11px;color:var(--t3);margin-bottom:2px}
+.pr-val{font-size:13px;color:var(--t);font-weight:500}
+.ind-tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:10px;margin:2px 2px 0 0}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 16px 0}
+.mbox{background:var(--bg2);border:0.5px solid var(--b);border-radius:var(--rads);padding:10px 12px}
+.mlbl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.mval{font-size:16px;font-weight:700;color:var(--t)}
 
-  /* DETAIL PANEL */
-  .detail-panel {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: var(--bg);
-    overflow-y: auto;
-    padding-bottom: 40px;
-    max-width: 480px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .detail-panel.open { display: block; }
-  .detail-topbar {
-    position: sticky;
-    top: 0;
-    background: rgba(13,15,18,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 0.5px solid var(--border);
-    padding: 14px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    z-index: 10;
-  }
-  .back-btn { font-size: 22px; cursor: pointer; color: var(--accent); line-height: 1; }
-  .detail-title { font-size: 16px; font-weight: 600; color: var(--text); }
-  .detail-sub { font-size: 12px; color: var(--text3); }
-  .detail-body { padding: 16px; }
-  .detail-section { margin-bottom: 20px; }
-  .detail-section-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
-  .detail-block { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; }
-  .detail-block p { font-size: 13px; color: var(--text2); line-height: 1.6; }
-  .detail-block strong { color: var(--text); font-weight: 600; }
-  .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .metric-box { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
-  .metric-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-  .metric-val { font-size: 16px; font-weight: 600; color: var(--text); }
-  .metric-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
-  .loading-state { text-align: center; padding: 40px 20px; }
-  .loading-state .spinner { width: 32px; height: 32px; border: 2px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-state p { font-size: 13px; color: var(--text3); }
-  .progress-line { height: 2px; background: var(--border); border-radius: 1px; margin: 8px 0; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--accent); border-radius: 1px; animation: progress 2s ease-in-out infinite; }
-  @keyframes progress { 0%{width:0%;margin-left:0} 50%{width:60%;margin-left:20%} 100%{width:0%;margin-left:100%} }
+/* DETAIL PANEL */
+.dp{display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;max-width:480px;left:50%;transform:translateX(-50%);padding-bottom:40px}
+.dp.on{display:block}
+.dp-tb{position:sticky;top:0;background:rgba(13,15,18,0.95);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--b);padding:12px 16px;display:flex;align-items:center;gap:11px;z-index:10}
+.dp-back{font-size:24px;cursor:pointer;color:var(--acc);line-height:1;background:none;border:none;font-family:inherit;padding:0}
+.dp-t{font-size:16px;font-weight:700;color:var(--t)}
+.dp-s{font-size:12px;color:var(--t3)}
+.dp-body{padding:15px}
+.ds{margin-bottom:18px}
+.ds-t{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px}
+.db{background:var(--bg2);border:0.5px solid var(--b);border-radius:var(--rads);padding:11px 13px;margin-bottom:6px}
+.db p{font-size:13px;color:var(--t2);line-height:1.6}
+.db strong{color:var(--t);font-weight:600}
+.mg2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.mb{background:var(--bg2);border:0.5px solid var(--b);border-radius:var(--rads);padding:9px 11px}
+.mb-l{font-size:10px;color:var(--t3);margin-bottom:3px}
+.mb-v{font-size:15px;font-weight:700;color:var(--t)}
+.mb-s{font-size:11px;color:var(--t3);margin-top:1px}
 
-  /* WATCHLIST PAGE */
-  .wl-controls { padding: 12px 16px; display: flex; gap: 8px; overflow-x: auto; -ms-overflow-style:none; scrollbar-width:none; }
-  .wl-controls::-webkit-scrollbar { display: none; }
-  .wl-filter { flex-shrink: 0; padding: 5px 12px; border: 0.5px solid var(--border2); border-radius: 20px; font-size: 12px; cursor: pointer; color: var(--text3); background: transparent; transition: all 0.15s; }
-  .wl-filter.active { border-color: var(--accent); color: var(--accent); background: rgba(79,142,247,0.08); }
-  .wl-row { display: flex; align-items: center; padding: 13px 14px; gap: 12px; border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background 0.1s; }
-  .wl-row:active { background: var(--bg3); }
-  .wl-sym { font-size: 14px; font-weight: 700; color: var(--text); min-width: 50px; }
-  .wl-info { flex: 1; }
-  .wl-name { font-size: 12px; color: var(--text2); }
-  .wl-why-short { font-size: 11px; color: var(--text3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
-  .wl-right { text-align: right; }
-  .wl-chg { font-size: 13px; font-weight: 600; }
-  .chg-up { color: var(--green); }
-  .chg-down { color: var(--red); }
-  .wl-risk { font-size: 10px; color: var(--text3); margin-top: 2px; }
+/* SPINNER */
+.spin-wrap{text-align:center;padding:40px 20px}
+.spinner{width:30px;height:30px;border:2px solid var(--b2);border-top-color:var(--acc);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin-wrap p{font-size:13px;color:var(--t3)}
+.prog{height:2px;background:var(--b);border-radius:1px;margin:7px auto;width:120px;overflow:hidden}
+.prog-fill{height:100%;background:var(--acc);border-radius:1px;animation:prog 1.8s ease-in-out infinite}
+@keyframes prog{0%{width:0;margin-left:0}50%{width:55%;margin-left:15%}100%{width:0;margin-left:100%}}
 
-  /* LEARN PAGE */
-  .learn-progress { margin: 0 16px 16px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; }
-  .lp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .lp-title { font-size: 13px; font-weight: 600; color: var(--text); }
-  .lp-pct { font-size: 13px; font-weight: 600; color: var(--accent); }
-  .lp-bar-bg { height: 4px; background: var(--bg4); border-radius: 2px; }
-  .lp-bar-fill { height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; width: 37.5%; }
-  .lp-sub { font-size: 11px; color: var(--text3); margin-top: 6px; }
-  .learn-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; margin: 0 16px 10px; cursor: pointer; }
-  .lc-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .lc-week { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
-  .lc-done { font-size: 10px; padding: 2px 7px; border-radius: 10px; background: var(--green-bg); color: var(--green); margin-left: auto; }
-  .lc-next { font-size: 10px; padding: 2px 7px; border-radius: 10px; background: rgba(79,142,247,0.12); color: var(--accent); margin-left: auto; }
-  .lc-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  .lc-sub { font-size: 12px; color: var(--text3); }
+/* ALERT */
+.alert{margin:10px 16px 0;background:rgba(79,142,247,0.09);border:0.5px solid rgba(79,142,247,0.22);border-radius:var(--rads);padding:9px 12px;display:flex;align-items:center;gap:8px}
+.alert-dot{width:6px;height:6px;border-radius:50%;background:var(--acc);flex-shrink:0}
+.alert-t{font-size:12px;color:var(--t2);line-height:1.4}
 
-  /* SEARCH */
-  .search-wrap { padding: 12px 16px; }
-  .search-box { display: flex; align-items: center; gap: 8px; background: var(--bg2); border: 0.5px solid var(--border2); border-radius: 10px; padding: 10px 12px; }
-  .search-box input { flex: 1; background: transparent; border: none; outline: none; font-size: 14px; color: var(--text); font-family: var(--font); }
-  .search-box input::placeholder { color: var(--text3); }
-  .search-box .si { font-size: 16px; color: var(--text3); }
+/* QUIZ BUTTON */
+.qbtn{display:block;width:100%;text-align:left;padding:9px 12px;border:0.5px solid var(--b2);border-radius:var(--rads);background:transparent;color:var(--t2);font-size:13px;cursor:pointer;margin-bottom:6px;font-family:inherit;transition:background 0.1s}
+.qbtn:hover{background:var(--bg3)}
+.qbtn.qc{background:var(--gbg)!important;border-color:var(--gb)!important;color:var(--g)!important}
+.qbtn.qw{background:var(--rbg)!important;border-color:var(--rb)!important;color:var(--r)!important}
 
-  /* PROFILE PAGE */
-  .profile-header { padding: 20px 16px 16px; display: flex; align-items: center; gap: 14px; border-bottom: 0.5px solid var(--border); }
-  .profile-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: white; flex-shrink: 0; }
-  .profile-name { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
-  .profile-title { font-size: 13px; color: var(--text3); margin-top: 3px; }
-  .profile-row { display: flex; align-items: center; padding: 14px 16px; gap: 12px; border-bottom: 0.5px solid var(--border); }
-  .profile-row-icon { font-size: 18px; color: var(--text3); width: 24px; }
-  .profile-row-content { flex: 1; }
-  .profile-row-label { font-size: 12px; color: var(--text3); margin-bottom: 2px; }
-  .profile-row-val { font-size: 14px; color: var(--text); font-weight: 500; }
-  .industry-tag { display: inline-block; font-size: 11px; padding: 3px 8px; border-radius: 10px; margin: 2px 3px 2px 0; }
-
-  /* TABS inside detail */
-  .tab-row { display: flex; border-bottom: 0.5px solid var(--border); margin: 0 -16px; padding: 0 16px; }
-  .tab { flex: 1; text-align: center; padding: 10px 0; font-size: 12px; color: var(--text3); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; }
-  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-  /* MINI CHART */
-  .mini-chart { height: 48px; margin: 8px 0 4px; }
-  canvas.mini { width: 100%; height: 48px; }
-
-  /* ALERT BANNER */
-  .alert-banner { margin: 12px 16px 0; background: rgba(79,142,247,0.1); border: 0.5px solid rgba(79,142,247,0.25); border-radius: var(--radius-sm); padding: 10px 12px; display: flex; align-items: center; gap: 8px; }
-  .ab-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-  .ab-text { font-size: 12px; color: var(--text2); line-height: 1.4; flex: 1; }
-
-  /* EMPTY */
-  .empty-state { text-align: center; padding: 48px 24px; }
-  .empty-state p { font-size: 14px; color: var(--text3); }
-
-  /* SCROLL HINT */
-  .scroll-hint { text-align: center; padding: 8px; font-size: 11px; color: var(--text3); }
-
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #f5f7fa; --bg2: #ffffff; --bg3: #eef1f5; --bg4: #e2e6ed;
-      --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.12);
-      --text: #0d1117; --text2: #4a5568; --text3: #9aa3b0;
-    }
-    body { background: var(--bg); }
-    .topbar, .nav, .detail-panel, .detail-topbar { background: rgba(245,247,250,0.95); }
-  }
+@media(prefers-color-scheme:light){
+  :root{--bg:#f4f6f9;--bg2:#fff;--bg3:#edf0f4;--bg4:#e2e6ed;--b:rgba(0,0,0,0.07);--b2:rgba(0,0,0,0.13);--t:#0d1117;--t2:#4a5568;--t3:#9aa3b0}
+}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
-  <div class="topbar-left">
-    <span class="topbar-greeting">Good morning</span>
-    <span class="topbar-name">Vanshika's Intelligence</span>
+  <div>
+    <div class="tb-name">Vanshika's Intelligence</div>
+    <div class="tb-sub">Personalized market briefing</div>
   </div>
-  <div class="topbar-right">
-    <div class="notif-dot"></div>
-    <div class="avatar">VA</div>
+  <div class="avatar">VA</div>
+</div>
+
+<!-- HOME -->
+<div class="pg on" id="pg-home">
+  <div class="alert"><div class="alert-dot"></div><div class="alert-t">Tap any ticker or card for AI-powered deep analysis — news, history, forecast, and what it means for you.</div></div>
+  <div class="tstrip" id="tstrip"></div>
+  <div class="sec">
+    <div class="sec-hd"><span class="sec-t">Your industries</span><button class="sec-a" onclick="goPage('watchlist')">See all →</button></div>
+    <div id="ind-cards"></div>
+  </div>
+  <div class="sec">
+    <div class="sec-hd"><span class="sec-t">Today's briefing</span><button class="sec-a" onclick="goPage('news')">All news →</button></div>
+    <div id="home-news"></div>
   </div>
 </div>
 
-<!-- PAGES -->
-
-<!-- HOME PAGE -->
-<div class="page active" id="page-home">
-  <div class="alert-banner">
-    <div class="ab-dot"></div>
-    <div class="ab-text">Tap any card for AI-powered deep analysis — news, history, forecast, and what it means for you.</div>
-  </div>
-
-  <!-- Ticker strip -->
-  <div class="ticker-strip" id="tickerStrip"></div>
-
-  <!-- Your industries -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-title">Your industries</span>
-      <span class="section-action" onclick="switchPage('watchlist')">See all →</span>
-    </div>
-    <div id="industryCards"></div>
-  </div>
-
-  <!-- Top news -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-title">Today's briefing</span>
-      <span class="section-action" onclick="switchPage('news')">All news →</span>
-    </div>
-    <div id="homeNews"></div>
-  </div>
+<!-- NEWS -->
+<div class="pg" id="pg-news">
+  <div class="srch"><div class="srch-box"><span>🔍</span><input id="nsearch" placeholder="Search news, tickers…" oninput="renderNews()"></div></div>
+  <div class="wl-filters" id="nfilters"></div>
+  <div id="news-feed"></div>
 </div>
 
-<!-- NEWS PAGE -->
-<div class="page" id="page-news">
-  <div class="search-wrap">
-    <div class="search-box">
-      <span class="si">🔍</span>
-      <input type="text" placeholder="Search news, tickers, topics..." id="newsSearch" oninput="filterNews()">
-    </div>
-  </div>
-  <div style="padding: 0 16px; display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;" id="newsFilters"></div>
-  <div id="newsFeed"></div>
+<!-- WATCHLIST -->
+<div class="pg" id="pg-watchlist">
+  <div class="wl-filters" id="wlfilters"></div>
+  <div id="wl-rows"></div>
 </div>
 
-<!-- WATCHLIST PAGE -->
-<div class="page" id="page-watchlist">
-  <div class="wl-controls" id="wlFilters"></div>
-  <div id="watchlistRows"></div>
+<!-- LEARN -->
+<div class="pg" id="pg-learn">
+  <div class="lp-box">
+    <div class="lp-hd"><span class="lp-t">4-week curriculum</span><span class="lp-pct">37.5%</span></div>
+    <div class="lp-bar"><div class="lp-fill" style="width:37.5%"></div></div>
+    <div class="lp-sub">Week 2, Day 1 complete · 10 lessons remaining</div>
+  </div>
+  <div id="learn-list" style="padding-bottom:8px;"></div>
 </div>
 
-<!-- LEARN PAGE -->
-<div class="page" id="page-learn">
-  <div class="section" style="padding-bottom: 0;">
-    <div class="learn-progress">
-      <div class="lp-header">
-        <span class="lp-title">4-week curriculum</span>
-        <span class="lp-pct">37.5% done</span>
-      </div>
-      <div class="lp-bar-bg"><div class="lp-bar-fill"></div></div>
-      <div class="lp-sub">Week 2, Day 1 complete · 12 lessons remaining</div>
-    </div>
+<!-- PROFILE -->
+<div class="pg" id="pg-profile">
+  <div class="pr-hd">
+    <div class="pr-av">VA</div>
+    <div><div class="pr-name">Vanshika Aggarwal</div><div class="pr-role">Senior PM → Principal PM (L7) · Amazon Air Cargo</div></div>
   </div>
-  <div id="learnList"></div>
-</div>
-
-<!-- PROFILE PAGE -->
-<div class="page" id="page-profile">
-  <div class="profile-header">
-    <div class="profile-avatar">VA</div>
-    <div>
-      <div class="profile-name">Vanshika Aggarwal</div>
-      <div class="profile-title">Senior PM → Principal PM (L7)</div>
-    </div>
-  </div>
-  <div class="profile-row">
-    <div class="profile-row-icon">🏢</div>
-    <div class="profile-row-content">
-      <div class="profile-row-label">Current role</div>
-      <div class="profile-row-val">Senior PM, Amazon Air Cargo</div>
-    </div>
-  </div>
-  <div class="profile-row">
-    <div class="profile-row-icon">📍</div>
-    <div class="profile-row-content">
-      <div class="profile-row-label">Location</div>
-      <div class="profile-row-val">Seattle / Redmond area</div>
-    </div>
-  </div>
-  <div class="profile-row">
-    <div class="profile-row-icon">🎓</div>
-    <div class="profile-row-content">
-      <div class="profile-row-label">Education</div>
-      <div class="profile-row-val">MBA, Queen's University</div>
-    </div>
-  </div>
-  <div class="profile-row">
-    <div class="profile-row-icon">🏭</div>
-    <div class="profile-row-content">
-      <div class="profile-row-label">Your industries</div>
-      <div class="profile-row-val" style="margin-top:4px;">
-        <span class="industry-tag cat-tech">Tech & AI</span>
-        <span class="industry-tag cat-logistics">Logistics</span>
-        <span class="industry-tag cat-energy">Clean energy</span>
-        <span class="industry-tag cat-macro">E-commerce</span>
-      </div>
-    </div>
-  </div>
-  <div class="profile-row">
-    <div class="profile-row-icon">📈</div>
-    <div class="profile-row-content">
-      <div class="profile-row-label">Investing goals</div>
-      <div class="profile-row-val">Long-term wealth + stock picking</div>
-    </div>
-  </div>
-  <div class="profile-row">
-    <div class="profile-row-icon">🍷</div>
-    <div class="profile-row-content">
-      <div class="profile-row-label">Off duty</div>
-      <div class="profile-row-val">Cab Sauv · Malbec · Hiking · Board games</div>
-    </div>
-  </div>
-  <div class="section" style="padding-top: 20px;">
-    <div class="section-title" style="margin-bottom: 12px;">Watchlist overview</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-      <div class="metric-box"><div class="metric-label">Total tickers</div><div class="metric-val">14</div></div>
-      <div class="metric-box"><div class="metric-label">Sectors tracked</div><div class="metric-val">4</div></div>
-      <div class="metric-box"><div class="metric-label">Lessons done</div><div class="metric-val">6 / 16</div></div>
-      <div class="metric-box"><div class="metric-label">Investing level</div><div class="metric-val" style="font-size:13px;">Beginner+</div></div>
-    </div>
+  <div class="pr-row"><div class="pr-ico">📍</div><div><div class="pr-lbl">Location</div><div class="pr-val">Seattle / Redmond, WA</div></div></div>
+  <div class="pr-row"><div class="pr-ico">🎓</div><div><div class="pr-lbl">Education</div><div class="pr-val">MBA, Queen's University</div></div></div>
+  <div class="pr-row"><div class="pr-ico">🏭</div><div><div class="pr-lbl">Industries tracked</div><div class="pr-val" style="margin-top:4px;"><span class="ind-tag ct-tech">Tech & AI</span><span class="ind-tag ct-logistics">Logistics</span><span class="ind-tag ct-energy">Clean energy</span><span class="ind-tag ct-macro">E-commerce</span></div></div></div>
+  <div class="pr-row"><div class="pr-ico">📈</div><div><div class="pr-lbl">Investing goals</div><div class="pr-val">Long-term wealth + stock picking</div></div></div>
+  <div class="pr-row"><div class="pr-ico">🍷</div><div><div class="pr-lbl">Off duty</div><div class="pr-val">Cab Sauv · Malbec · Hiking · Board games</div></div></div>
+  <div class="mg">
+    <div class="mbox"><div class="mlbl">Tickers tracked</div><div class="mval">14</div></div>
+    <div class="mbox"><div class="mlbl">Sectors</div><div class="mval">4</div></div>
+    <div class="mbox"><div class="mlbl">Lessons done</div><div class="mval">6/16</div></div>
+    <div class="mbox"><div class="mlbl">Level</div><div class="mval" style="font-size:13px;">Beginner+</div></div>
   </div>
 </div>
 
 <!-- BOTTOM NAV -->
 <div class="nav">
-  <div class="nav-item active" onclick="switchPage('home')" id="nav-home">
-    <span class="nav-icon">⌂</span>
-    <span class="nav-label">Home</span>
-  </div>
-  <div class="nav-item" onclick="switchPage('news')" id="nav-news">
-    <span class="nav-icon">📰</span>
-    <span class="nav-label">News</span>
-  </div>
-  <div class="nav-item" onclick="switchPage('watchlist')" id="nav-watchlist">
-    <span class="nav-icon">📊</span>
-    <span class="nav-label">Watchlist</span>
-  </div>
-  <div class="nav-item" onclick="switchPage('learn')" id="nav-learn">
-    <span class="nav-icon">🎓</span>
-    <span class="nav-label">Learn</span>
-  </div>
-  <div class="nav-item" onclick="switchPage('profile')" id="nav-profile">
-    <span class="nav-icon">👤</span>
-    <span class="nav-label">Profile</span>
-  </div>
+  <button class="ni on" id="ni-home" onclick="goPage('home')"><span class="ni-ico">⌂</span><span class="ni-lbl">Home</span></button>
+  <button class="ni" id="ni-news" onclick="goPage('news')"><span class="ni-ico">📰</span><span class="ni-lbl">News</span></button>
+  <button class="ni" id="ni-watchlist" onclick="goPage('watchlist')"><span class="ni-ico">📊</span><span class="ni-lbl">Watchlist</span></button>
+  <button class="ni" id="ni-learn" onclick="goPage('learn')"><span class="ni-ico">🎓</span><span class="ni-lbl">Learn</span></button>
+  <button class="ni" id="ni-profile" onclick="goPage('profile')"><span class="ni-ico">👤</span><span class="ni-lbl">Profile</span></button>
 </div>
 
 <!-- DETAIL PANEL -->
-<div class="detail-panel" id="detailPanel">
-  <div class="detail-topbar">
-    <span class="back-btn" onclick="closeDetail()">‹</span>
-    <div>
-      <div class="detail-title" id="detailTitle">Loading...</div>
-      <div class="detail-sub" id="detailSub"></div>
-    </div>
+<div class="dp" id="dp">
+  <div class="dp-tb">
+    <button class="dp-back" onclick="closeDP()">‹</button>
+    <div><div class="dp-t" id="dp-title">—</div><div class="dp-s" id="dp-sub">—</div></div>
   </div>
-  <div class="detail-body" id="detailBody">
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <div class="progress-line"><div class="progress-fill"></div></div>
-      <p>Fetching analysis...</p>
-    </div>
-  </div>
+  <div class="dp-body" id="dp-body"><div class="spin-wrap"><div class="spinner"></div><div class="prog"><div class="prog-fill"></div></div><p>Loading…</p></div></div>
 </div>
 
 <script>
-const WATCHLIST = [
-  { ticker:'AMZN', name:'Amazon', cat:'tech', risk:'med', why:'You work here — inside context no one else has', sector:'E-commerce / Cloud' },
-  { ticker:'MSFT', name:'Microsoft', cat:'tech', risk:'low', why:'Azure, AI tools, Seattle employer', sector:'Cloud / AI' },
-  { ticker:'NVDA', name:'Nvidia', cat:'tech', risk:'high', why:'AI infrastructure — powers Amazon, logistics AI', sector:'Semiconductors' },
-  { ticker:'GOOGL', name:'Alphabet', cat:'tech', risk:'med', why:'Amazon competitor in cloud and commerce', sector:'Ads / Cloud' },
-  { ticker:'UPS', name:'United Parcel Service', cat:'logistics', risk:'low', why:'Direct ACAR competitor — watch their earnings', sector:'Logistics' },
-  { ticker:'FDX', name:'FedEx', cat:'logistics', risk:'low', why:'Air cargo industry benchmark', sector:'Logistics' },
-  { ticker:'DAL', name:'Delta Air Lines', cat:'logistics', risk:'med', why:'Air capacity and fuel cost dynamics', sector:'Airlines' },
-  { ticker:'NEE', name:'NextEra Energy', cat:'energy', risk:'low', why:'Largest US clean energy — wind and solar at scale', sector:'Renewables' },
-  { ticker:'ENPH', name:'Enphase Energy', cat:'energy', risk:'high', why:'Leading solar microinverter, rate-sensitive', sector:'Solar' },
-  { ticker:'TSLA', name:'Tesla', cat:'energy', risk:'high', why:'EV + clean energy, great for learning sentiment', sector:'EV / Energy' },
-  { ticker:'BEP', name:'Brookfield Renewable', cat:'energy', risk:'low', why:'Diversified renewables, pays dividends', sector:'Renewables' },
-  { ticker:'VOO', name:'Vanguard S&P 500 ETF', cat:'etf', risk:'low', why:'Your portfolio bedrock — hold always', sector:'Index ETF' },
-  { ticker:'XLI', name:'Industrial Select ETF', cat:'etf', risk:'low', why:'Your industry in one ticker', sector:'Index ETF' },
-  { ticker:'ICLN', name:'iShares Clean Energy ETF', cat:'etf', risk:'med', why:'100+ clean energy companies diversified', sector:'Clean ETF' },
+var WL=[
+  {t:'AMZN',n:'Amazon',c:'tech',r:'med',w:'You work here — inside context no one else has',s:'E-commerce/Cloud'},
+  {t:'MSFT',n:'Microsoft',c:'tech',r:'low',w:'Azure, AI tools, Seattle employer',s:'Cloud/AI'},
+  {t:'NVDA',n:'Nvidia',c:'tech',r:'high',w:'AI infrastructure powering Amazon and logistics AI',s:'Semiconductors'},
+  {t:'GOOGL',n:'Alphabet',c:'tech',r:'med',w:'Amazon competitor in cloud and commerce',s:'Ads/Cloud'},
+  {t:'UPS',n:'United Parcel Service',c:'logistics',r:'low',w:'Direct ACAR competitor — watch their earnings',s:'Logistics'},
+  {t:'FDX',n:'FedEx',c:'logistics',r:'low',w:'Air cargo industry benchmark',s:'Logistics'},
+  {t:'DAL',n:'Delta Air Lines',c:'logistics',r:'med',w:'Air capacity and fuel cost dynamics',s:'Airlines'},
+  {t:'NEE',n:'NextEra Energy',c:'energy',r:'low',w:'Largest US clean energy company',s:'Renewables'},
+  {t:'ENPH',n:'Enphase Energy',c:'energy',r:'high',w:'Leading solar microinverter, rate-sensitive',s:'Solar'},
+  {t:'TSLA',n:'Tesla',c:'energy',r:'high',w:'EV + clean energy, great for learning sentiment',s:'EV/Energy'},
+  {t:'BEP',n:'Brookfield Renewable',c:'energy',r:'low',w:'Diversified renewables, pays dividends',s:'Renewables'},
+  {t:'VOO',n:'Vanguard S&P 500 ETF',c:'etf',r:'low',w:'Your portfolio bedrock — hold always',s:'Index ETF'},
+  {t:'XLI',n:'Industrial Select ETF',c:'etf',r:'low',w:'Your industry in one ticker',s:'Index ETF'},
+  {t:'ICLN',n:'iShares Clean Energy ETF',c:'etf',r:'med',w:'100+ clean energy companies diversified',s:'Clean ETF'},
+];
+var CHG={AMZN:'+1.2%',MSFT:'+0.8%',NVDA:'+3.1%',GOOGL:'-0.4%',UPS:'-0.7%',FDX:'+0.3%',DAL:'+1.8%',NEE:'-0.5%',ENPH:'+2.4%',TSLA:'+1.1%',BEP:'-0.2%',VOO:'+0.6%',XLI:'+0.4%',ICLN:'+1.7%'};
+var NEWS=[
+  {id:1,c:'tech',h:'Nvidia reports record datacenter revenue, raises guidance',s:'Nvidia beat Q2 expectations with $26B in datacenter revenue driven by AI chip demand. The company raised full-year guidance, sending the stock up 3% after hours.',sent:'Positive',time:'2h ago',tk:['NVDA'],rel:'Core to your AI-focused holdings'},
+  {id:2,c:'logistics',h:'Amazon Air Cargo expands capacity on key West Coast routes',s:'Amazon Air announced expansion with 12 new routes from Seattle and LAX. This directly affects ACAR competitive dynamics and digital booking demand.',sent:'Positive',time:'4h ago',tk:['AMZN'],rel:'Directly relevant to your work at ACAR'},
+  {id:3,c:'macro',h:'Federal Reserve signals two more rate cuts in 2026',s:'Fed Chair signaled a dovish pivot with 50bps of cuts by year-end. Lower rates are bullish for growth stocks and clean energy companies.',sent:'Positive',time:'5h ago',tk:['NEE','ENPH','TSLA'],rel:'Affects your clean energy picks heavily'},
+  {id:4,c:'energy',h:'Inflation Reduction Act clean energy credits face congressional review',s:'Congressional review of IRA tax credits created uncertainty for solar and wind developers. Enphase and NextEra saw selling pressure.',sent:'Negative',time:'6h ago',tk:['NEE','ENPH','ICLN'],rel:'Policy risk on your clean energy positions'},
+  {id:5,c:'logistics',h:'FedEx misses earnings, cuts volume guidance for 2026',s:'FedEx reported Q2 earnings below consensus, citing softness in international air freight. Volume guidance cut 8% — a potential read-through to air cargo demand.',sent:'Negative',time:'8h ago',tk:['FDX','UPS'],rel:'Industry signal for ACAR and your logistics picks'},
+  {id:6,c:'tech',h:'Microsoft Azure revenue grows 33% on AI workload demand',s:'Azure cloud segment accelerated growth, driven by enterprise AI adoption. Microsoft now has 85% of Fortune 500 using at least one Azure AI service.',sent:'Positive',time:'10h ago',tk:['MSFT'],rel:'Strong fundamental signal for your MSFT holding'},
+  {id:7,c:'macro',h:'US GDP growth slows to 1.4% in Q1 — below expectations',s:'GDP growth missed the 2.1% consensus, raising mild recession concerns. Defensive sectors outperformed on the news.',sent:'Negative',time:'1d ago',tk:['VOO'],rel:'Macro context for your index ETF holdings'},
+  {id:8,c:'energy',h:'Clean energy installations hit record globally in H1 2026',s:'Solar and wind installations broke records, with the US leading capacity additions. This supports long-term thesis for NEE, BEP, and ICLN.',sent:'Positive',time:'1d ago',tk:['NEE','BEP','ICLN'],rel:'Long-term tailwind for your clean energy picks'},
+  {id:9,c:'tech',h:'Alphabet faces DOJ antitrust ruling on search monopoly',s:'A federal judge ruled Alphabet illegally maintained its search monopoly. Shares fell 4% as investors weighed potential forced divestitures.',sent:'Negative',time:'1d ago',tk:['GOOGL'],rel:'Regulatory risk — watch before adding to GOOGL'},
+  {id:10,c:'logistics',h:'Delta Air reports strong summer bookings, raises profit outlook',s:'Delta saw 12% increase in summer bookings on international routes. Fuel costs remained manageable, driving a raised Q3 earnings outlook.',sent:'Positive',time:'2d ago',tk:['DAL'],rel:'Positive signal for your DAL holding'},
+];
+var LESSONS=[
+  {wk:1,d:1,t:'What is a stock?',s:'Ownership basics',done:true},
+  {wk:1,d:2,t:'How prices move',s:'Supply & demand',done:true},
+  {wk:1,d:3,t:'Types of investments',s:'Stocks, bonds, ETFs',done:true},
+  {wk:1,d:4,t:'Reading a stock chart',s:'Price, trends, MAs',done:true},
+  {wk:1,d:5,t:'Week 1 recap',s:'Final quiz + watchlist',done:true},
+  {wk:2,d:1,t:'Long-term vs short-term',s:'Time horizon + compounding',done:true},
+  {wk:2,d:2,t:'Index investing',s:'The beginner superpower',done:false,next:true},
+  {wk:2,d:3,t:'Risk and reward',s:'How to manage risk',done:false},
+  {wk:2,d:4,t:'Reading financials',s:'Revenue, profit, P/E ratio',done:false},
+  {wk:2,d:5,t:'Week 2 recap',s:'Your first watchlist plan',done:false},
+  {wk:3,d:1,t:'Researching a company',s:'Where to look, what to ask',done:false},
+  {wk:3,d:2,t:'Growth vs value stocks',s:'Two philosophies',done:false},
+  {wk:3,d:3,t:'Sectors and macro',s:'Big picture investing',done:false},
+  {wk:3,d:4,t:'When to buy and sell',s:'Entry and exit discipline',done:false},
+  {wk:3,d:5,t:'Portfolio construction',s:'Your first plan',done:false},
+  {wk:4,d:1,t:'Reading financial news',s:'Cut through the noise',done:false},
 ];
 
-const MOCK_CHANGES = {
-  AMZN:'+1.2%', MSFT:'+0.8%', NVDA:'+3.1%', GOOGL:'-0.4%',
-  UPS:'-0.7%', FDX:'+0.3%', DAL:'+1.8%', NEE:'-0.5%',
-  ENPH:'+2.4%', TSLA:'+1.1%', BEP:'-0.2%', VOO:'+0.6%',
-  XLI:'+0.4%', ICLN:'+1.7%'
-};
+var curNF='all', curWF='all';
 
-const NEWS_FEED = [
-  { id:1, cat:'tech', headline:'Nvidia reports record datacenter revenue, raises guidance', summary:'Nvidia beat Q2 expectations with $26B in datacenter revenue, driven by AI chip demand. The company raised full-year guidance, sending the stock up 3% in after-hours trading.', sentiment:'Positive', time:'2h ago', tickers:['NVDA'], relevance:'Core to your AI-focused holdings' },
-  { id:2, cat:'logistics', headline:'Amazon Air Cargo expands capacity on key West Coast routes', summary:'Amazon Air announced expansion of its air cargo network with 12 new routes from Seattle and LAX. This directly affects ACAR competitive dynamics and digital booking demand.', sentiment:'Positive', time:'4h ago', tickers:['AMZN'], relevance:'Directly relevant to your work at ACAR' },
-  { id:3, cat:'macro', headline:'Federal Reserve signals two more rate cuts in 2026', summary:'Fed Chair signaled a dovish pivot, suggesting 50bps of cuts by year-end. Lower rates are typically bullish for growth stocks and clean energy companies that carry significant debt.', sentiment:'Positive', time:'5h ago', tickers:['NEE','ENPH','TSLA'], relevance:'Affects clean energy picks heavily' },
-  { id:4, cat:'energy', headline:'Inflation Reduction Act clean energy credits face congressional review', summary:'Congressional review of IRA tax credits has created uncertainty for solar and wind developers. Stocks like Enphase and NextEra saw selling pressure on the news.', sentiment:'Negative', time:'6h ago', tickers:['NEE','ENPH','ICLN'], relevance:'Policy risk on your clean energy positions' },
-  { id:5, cat:'logistics', headline:'FedEx misses earnings, cuts volume guidance for 2026', summary:'FedEx reported Q2 earnings below consensus, citing softness in international air freight. Volume guidance cut 8% — a potential read-through to air cargo industry demand trends.', sentiment:'Negative', time:'8h ago', tickers:['FDX','UPS'], relevance:'Industry signal for ACAR and your logistics picks' },
-  { id:6, cat:'tech', headline:'Microsoft Azure revenue grows 33% on AI workload demand', summary:'Azure cloud segment accelerated growth this quarter, driven by enterprise AI adoption. Microsoft now has 85% of Fortune 500 using at least one Azure AI service.', sentiment:'Positive', time:'10h ago', tickers:['MSFT'], relevance:'Strong fundamental signal for your MSFT holding' },
-  { id:7, cat:'macro', headline:'US GDP growth slows to 1.4% in Q1 — below expectations', summary:'GDP growth came in below the 2.1% consensus estimate, raising mild recession concerns. Defensive sectors like utilities and consumer staples outperformed on the news.', sentiment:'Negative', time:'1d ago', tickers:['VOO'], relevance:'Macro context for your index ETF holdings' },
-  { id:8, cat:'energy', headline:'Clean energy installations hit record globally in H1 2026', summary:'Solar and wind installations broke records globally, with the US leading capacity additions. This structural tailwind supports long-term thesis for NEE, BEP, and ICLN.', sentiment:'Positive', time:'1d ago', tickers:['NEE','BEP','ICLN'], relevance:'Long-term tailwind for your clean energy picks' },
-  { id:9, cat:'tech', headline:'Alphabet faces DOJ antitrust ruling on search monopoly', summary:'A federal judge ruled Alphabet illegally maintained its search monopoly. Shares fell 4% on the news as investors weighed potential remedies including forced business divestitures.', sentiment:'Negative', time:'1d ago', tickers:['GOOGL'], relevance:'Regulatory risk — watch before adding to GOOGL' },
-  { id:10, cat:'logistics', headline:'Delta Air reports strong summer bookings, raises profit outlook', summary:'Delta saw 12% increase in summer bookings, particularly on international routes. Fuel costs remained manageable, driving a raised earnings outlook for Q3.', sentiment:'Positive', time:'2d ago', tickers:['DAL'], relevance:'Positive signal for your DAL holding' },
-];
-
-const LEARN_LESSONS = [
-  { week:1, day:1, title:'What is a stock?', sub:'Ownership basics', done:true },
-  { week:1, day:2, title:'How prices move', sub:'Supply & demand', done:true },
-  { week:1, day:3, title:'Types of investments', sub:'Stocks, bonds, ETFs', done:true },
-  { week:1, day:4, title:'Reading a stock chart', sub:'Price, trends, MAs', done:true },
-  { week:1, day:5, title:'Week 1 recap', sub:'Final quiz + watchlist', done:true },
-  { week:2, day:1, title:'Long-term vs short-term', sub:'Time horizon + compounding', done:true },
-  { week:2, day:2, title:'Index investing', sub:'The beginner superpower', done:false, next:true },
-  { week:2, day:3, title:'Risk and reward', sub:'How to manage risk', done:false },
-  { week:2, day:4, title:'Reading financials', sub:'Revenue, profit, P/E ratio', done:false },
-  { week:2, day:5, title:'Week 2 recap', sub:'Your first watchlist plan', done:false },
-  { week:3, day:1, title:'Researching a company', sub:'Where to look, what to ask', done:false },
-  { week:3, day:2, title:'Growth vs value stocks', sub:'Two philosophies', done:false },
-  { week:3, day:3, title:'Sectors and macro', sub:'Big picture investing', done:false },
-  { week:3, day:4, title:'When to buy and sell', sub:'Entry and exit discipline', done:false },
-  { week:3, day:5, title:'Portfolio construction', sub:'Your first plan', done:false },
-  { week:4, day:1, title:'Reading financial news', sub:'Cut through the noise', done:false },
-];
-
-let currentNewsFilter = 'all';
-let currentWLFilter = 'all';
-
-function switchPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  document.getElementById('nav-'+page).classList.add('active');
+function goPage(id){
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('on')});
+  document.getElementById('pg-'+id).classList.add('on');
+  document.getElementById('ni-'+id).classList.add('on');
   window.scrollTo(0,0);
 }
 
-function renderTickerStrip() {
-  const el = document.getElementById('tickerStrip');
-  const featured = ['AMZN','MSFT','NVDA','GOOGL','UPS','NEE','TSLA','VOO'];
-  el.innerHTML = featured.map(t => {
-    const chg = MOCK_CHANGES[t] || '+0.0%';
-    const up = chg.startsWith('+');
-    return `<div class="ticker-pill" onclick="openDetail('${t}')">
-      <div class="tp-sym">${t}</div>
-      <div class="tp-chg ${up?'up':'down'}">${chg}</div>
-    </div>`;
-  }).join('');
+function openDP(title,sub){
+  document.getElementById('dp-title').textContent=title;
+  document.getElementById('dp-sub').textContent=sub||'';
+  document.getElementById('dp-body').innerHTML='<div class="spin-wrap"><div class="spinner"></div><div class="prog"><div class="prog-fill"></div></div><p>Fetching AI analysis…</p></div>';
+  document.getElementById('dp').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function closeDP(){
+  document.getElementById('dp').classList.remove('on');
+  document.body.style.overflow='';
 }
 
-function renderIndustryCards() {
-  const el = document.getElementById('industryCards');
-  const industries = [
-    { name:'Tech & AI', cat:'tech', desc:'Nvidia, Microsoft, Amazon, Alphabet', count:4, trend:'+2.1%' },
-    { name:'Logistics & Air Cargo', cat:'logistics', desc:'UPS, FedEx, Delta — your industry', count:3, trend:'+0.6%' },
-    { name:'Clean Energy', cat:'energy', desc:'NextEra, Enphase, Tesla, Brookfield', count:4, trend:'+1.4%' },
-    { name:'ETFs', cat:'etf', desc:'VOO, XLI, ICLN — your foundation', count:3, trend:'+0.7%' },
+// BUILD HOME
+function buildHome(){
+  // ticker strip
+  var strip=document.getElementById('tstrip');
+  strip.innerHTML=['AMZN','MSFT','NVDA','GOOGL','UPS','NEE','TSLA','VOO'].map(function(t){
+    var chg=CHG[t]||'+0.0%';var up=chg[0]==='+';
+    return '<div class="tpill" onclick="openStock(\''+t+'\')"><div class="tp-s">'+t+'</div><div class="tp-c '+(up?'up':'dn')+'">'+chg+'</div></div>';
+  }).join('');
+
+  // industry cards
+  var inds=[
+    {n:'Tech & AI',c:'tech',d:'Nvidia, Microsoft, Amazon, Alphabet',cnt:4,tr:'+2.1%'},
+    {n:'Logistics & Air Cargo',c:'logistics',d:'UPS, FedEx, Delta — your industry',cnt:3,tr:'+0.6%'},
+    {n:'Clean Energy',c:'energy',d:'NextEra, Enphase, Tesla, Brookfield',cnt:4,tr:'+1.4%'},
+    {n:'ETFs',c:'etf',d:'VOO, XLI, ICLN — your foundation',cnt:3,tr:'+0.7%'},
   ];
-  el.innerHTML = industries.map(i => `
-    <div class="card" onclick="filterWLAndSwitch('${i.cat}')">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-        <span class="nc-cat cat-${i.cat}">${i.name}</span>
-        <span style="font-size:13px;font-weight:600;color:${i.trend.startsWith('+')?'var(--green)':'var(--red)'};">${i.trend}</span>
-      </div>
-      <div style="font-size:13px;color:var(--text2);">${i.desc}</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:4px;">${i.count} tickers tracked</div>
-    </div>`).join('');
+  document.getElementById('ind-cards').innerHTML=inds.map(function(i){
+    var up=i.tr[0]==='+';
+    return '<div class="card" onclick="goWLFilter(\''+i.c+'\')">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">'+
+      '<span class="cat-tag ct-'+i.c+'">'+i.n+'</span>'+
+      '<span style="font-size:13px;font-weight:600;color:'+(up?'var(--g)':'var(--r)')+'">'+i.tr+'</span></div>'+
+      '<div style="font-size:13px;color:var(--t2);">'+i.d+'</div>'+
+      '<div style="font-size:11px;color:var(--t3);margin-top:3px;">'+i.cnt+' tickers tracked</div></div>';
+  }).join('');
+
+  // top news
+  document.getElementById('home-news').innerHTML=NEWS.slice(0,4).map(ncHTML).join('');
 }
 
-function filterWLAndSwitch(cat) {
-  currentWLFilter = cat;
-  renderWatchlist();
-  switchPage('watchlist');
+function ncHTML(n){
+  var sc={'Positive':'s-pos','Negative':'s-neg','Neutral':'s-neu'}[n.sent]||'s-neu';
+  var si={'Positive':'↑','Negative':'↓','Neutral':'→'}[n.sent]||'→';
+  return '<div class="card" onclick="openNews('+n.id+')">'+
+    '<div class="nc-meta"><span class="cat-tag ct-'+n.c+'">'+n.c+'</span>'+
+    '<span style="font-size:11px;color:var(--t3);">'+n.tk.join(', ')+'</span>'+
+    '<span class="nc-time">'+n.time+'</span></div>'+
+    '<div class="nc-hl">'+n.h+'</div>'+
+    '<div class="nc-sm">'+n.s+'</div>'+
+    '<div style="display:flex;align-items:center;">'+
+    '<span class="sent '+sc+'">'+si+' '+n.sent+'</span>'+
+    '<span class="nc-rel">'+n.rel+'</span></div></div>';
 }
 
-function renderHomeNews() {
-  const el = document.getElementById('homeNews');
-  const top = NEWS_FEED.slice(0,4);
-  el.innerHTML = top.map(n => newsCardHTML(n)).join('');
+// NEWS PAGE
+function renderNews(){
+  var filters=document.getElementById('nfilters');
+  var cats=['all','tech','logistics','energy','macro'];
+  filters.innerHTML=cats.map(function(c){
+    return '<button class="wf'+(c===curNF?' on':'')+'" onclick="setNF(\''+c+'\')">'+(c==='all'?'All news':c)+'</button>';
+  }).join('');
+  var q=(document.getElementById('nsearch')||{}).value||'';
+  var fl=NEWS.filter(function(n){
+    if(curNF!=='all'&&n.c!==curNF)return false;
+    if(q&&!n.h.toLowerCase().includes(q.toLowerCase())&&!n.s.toLowerCase().includes(q.toLowerCase())&&!n.tk.join(' ').toLowerCase().includes(q.toLowerCase()))return false;
+    return true;
+  });
+  document.getElementById('news-feed').innerHTML=fl.map(function(n){return '<div style="padding:0 16px;">'+ncHTML(n)+'</div>';}).join('')||'<div style="text-align:center;padding:40px;font-size:14px;color:var(--t3);">No results</div>';
 }
+function setNF(c){curNF=c;renderNews();}
 
-function newsCardHTML(n) {
-  const sentClass = {'Positive':'sent-pos','Negative':'sent-neg','Neutral':'sent-neu'}[n.sentiment] || 'sent-neu';
-  const sentIcon = {'Positive':'↑','Negative':'↓','Neutral':'→'}[n.sentiment] || '→';
-  return `<div class="card" onclick="openNewsDetail(${n.id})">
-    <div class="nc-meta">
-      <span class="nc-cat cat-${n.cat}">${n.cat}</span>
-      <span style="font-size:11px;color:var(--text3);">${n.tickers.join(', ')}</span>
-      <span class="nc-time">${n.time}</span>
-    </div>
-    <div class="nc-headline">${n.headline}</div>
-    <div class="nc-summary">${n.summary}</div>
-    <div style="display:flex;align-items:center;">
-      <span class="nc-sentiment ${sentClass}">${sentIcon} ${n.sentiment}</span>
-      <span class="nc-relevance">${n.relevance}</span>
-    </div>
-  </div>`;
+// WATCHLIST PAGE
+function renderWL(){
+  var el=document.getElementById('wlfilters');
+  var cats=[{k:'all',l:'All'},{k:'tech',l:'Tech & AI'},{k:'logistics',l:'Logistics'},{k:'energy',l:'Clean energy'},{k:'etf',l:'ETFs'}];
+  el.innerHTML=cats.map(function(c){return '<button class="wf'+(c.k===curWF?' on':'')+'" onclick="setWF(\''+c.k+'\')">'+c.l+'</button>';}).join('');
+  var fl=curWF==='all'?WL:WL.filter(function(w){return w.c===curWF;});
+  var rc={low:'rl',med:'rm',high:'rh'};var rl={low:'Lower risk',med:'Medium risk',high:'Higher risk'};
+  document.getElementById('wl-rows').innerHTML=fl.map(function(w){
+    var chg=CHG[w.t]||'+0.0%';var up=chg[0]==='+';
+    return '<div class="wl-row" onclick="openStock(\''+w.t+'\')">'+
+      '<span class="wl-sym">'+w.t+'</span>'+
+      '<div class="wl-info"><div class="wl-nm">'+w.n+'</div><div class="wl-w">'+w.w+'</div></div>'+
+      '<div class="wl-rt"><div class="wl-chg '+(up?'up':'dn')+'">'+chg+'</div>'+
+      '<span class="rb '+rc[w.r]+'">'+rl[w.r]+'</span></div></div>';
+  }).join('');
 }
+function setWF(c){curWF=c;renderWL();}
+function goWLFilter(c){curWF=c;renderWL();goPage('watchlist');}
 
-function renderNewsFeed() {
-  const filtersEl = document.getElementById('newsFilters');
-  const cats = ['all','tech','logistics','energy','macro'];
-  filtersEl.innerHTML = cats.map(c => `
-    <span class="wl-filter ${c===currentNewsFilter?'active':''}" onclick="setNewsFilter('${c}')">${c==='all'?'All news':c}</span>
-  `).join('');
-
-  const feedEl = document.getElementById('newsFeed');
-  const q = document.getElementById('newsSearch').value.toLowerCase();
-  let filtered = NEWS_FEED;
-  if (currentNewsFilter !== 'all') filtered = filtered.filter(n => n.cat === currentNewsFilter);
-  if (q) filtered = filtered.filter(n => n.headline.toLowerCase().includes(q) || n.summary.toLowerCase().includes(q) || n.tickers.some(t => t.toLowerCase().includes(q)));
-  feedEl.innerHTML = filtered.length ? filtered.map(n => `<div style="padding:0 16px;">${newsCardHTML(n)}</div>`).join('') : '<div class="empty-state"><p>No news matching your search.</p></div>';
-}
-
-function setNewsFilter(cat) {
-  currentNewsFilter = cat;
-  renderNewsFeed();
-}
-
-function filterNews() { renderNewsFeed(); }
-
-function renderWatchlist() {
-  const filtersEl = document.getElementById('wlFilters');
-  const cats = [{k:'all',l:'All'},{k:'tech',l:'Tech & AI'},{k:'logistics',l:'Logistics'},{k:'energy',l:'Clean energy'},{k:'etf',l:'ETFs'}];
-  filtersEl.innerHTML = cats.map(c => `<span class="wl-filter ${c.k===currentWLFilter?'active':''}" onclick="setWLFilter('${c.k}')">${c.l}</span>`).join('');
-
-  const el = document.getElementById('watchlistRows');
-  const filtered = currentWLFilter==='all' ? WATCHLIST : WATCHLIST.filter(w => w.cat===currentWLFilter);
-  el.innerHTML = filtered.map(w => {
-    const chg = MOCK_CHANGES[w.ticker] || '+0.0%';
-    const up = chg.startsWith('+');
-    const riskCls = {low:'risk-low',med:'risk-med',high:'risk-high'}[w.risk];
-    const riskLabel = {low:'Lower risk',med:'Medium risk',high:'Higher risk'}[w.risk];
-    return `<div class="wl-row" onclick="openDetail('${w.ticker}')">
-      <span class="wl-sym">${w.ticker}</span>
-      <div class="wl-info">
-        <div class="wl-name">${w.name}</div>
-        <div class="wl-why-short">${w.why}</div>
-      </div>
-      <div class="wl-right">
-        <div class="wl-chg ${up?'chg-up':'chg-down'}">${chg}</div>
-        <div><span class="risk-badge ${riskCls}">${riskLabel}</span></div>
-      </div>
-    </div>`;
+// LEARN PAGE
+function renderLearn(){
+  document.getElementById('learn-list').innerHTML=LESSONS.map(function(l){
+    var badge=l.done?'<span class="lc-done">✓ Done</span>':l.next?'<span class="lc-next">Up next</span>':'';
+    return '<div class="lc" onclick="openLesson('+l.wk+','+l.d+')">'+
+      '<div class="lc-meta"><span class="lc-wk">Week '+l.wk+' · Day '+l.d+'</span>'+badge+'</div>'+
+      '<div class="lc-t">'+l.t+'</div><div class="lc-s">'+l.s+'</div></div>';
   }).join('');
 }
 
-function setWLFilter(cat) {
-  currentWLFilter = cat;
-  renderWatchlist();
+// OPEN STOCK DETAIL
+function openStock(ticker){
+  var st=WL.find(function(w){return w.t===ticker;})||{t:ticker,n:ticker,c:'custom',r:'med',w:'Custom lookup',s:'—'};
+  openDP(ticker,st.n+' · '+st.s);
+  callClaude(
+    'You are a financial analyst writing for Vanshika Aggarwal — Senior PM at Amazon Air Cargo in Seattle, pursuing L7 promotion. She owns digital commerce, standardized products, and pricing strategy for ACAR. She is a complete beginner investor. Her watchlist: AMZN, MSFT, NVDA, GOOGL, UPS, FDX, DAL, NEE, ENPH, TSLA, BEP, VOO, XLI, ICLN.\n\nProvide deep analysis for '+ticker+' ('+st.n+') in '+st.s+'.\n\nReturn ONLY valid JSON, no markdown, no extra text:\n{"price_snapshot":{"current":"$XXX","change_today":"+X.X%","week_change":"+X.X%","high_52w":"$XXX","low_52w":"$XXX"},"what_happened_today":"2 sentences on recent price movement and why","business_summary":"2 sentences on what this company does","why_vanshika":"2 sentences connecting to her work at Amazon Air Cargo or her industry","historical_context":"2 sentences on 3-5 year performance","forecast":{"direction":"Bullish","target":"$XXX","reasoning":"2 sentences"},"key_risks":["risk1","risk2","risk3"],"beginner_lesson":"2 sentences explaining one investing concept this stock illustrates","action":"Watch / Research more / Strong hold / Avoid for now"}'
+  ).then(function(raw){
+    try{renderStock(st,JSON.parse(raw));}catch(e){showErr();}
+  }).catch(showErr);
 }
 
-function renderLearn() {
-  const el = document.getElementById('learnList');
-  el.innerHTML = LEARN_LESSONS.map(l => {
-    const badgeClass = l.done ? 'lc-done' : (l.next ? 'lc-next' : '');
-    const badgeText = l.done ? '✓ Done' : (l.next ? 'Up next' : '');
-    return `<div class="learn-card" onclick="openLearnDetail(${l.week},${l.day})">
-      <div class="lc-meta">
-        <span class="lc-week">Week ${l.week} · Day ${l.day}</span>
-        ${badgeText ? `<span class="${badgeClass}">${badgeText}</span>` : ''}
-      </div>
-      <div class="lc-title">${l.title}</div>
-      <div class="lc-sub">${l.sub}</div>
-    </div>`;
-  }).join('');
+// OPEN NEWS DETAIL
+function openNews(id){
+  var n=NEWS.find(function(x){return x.id===id;});
+  if(!n)return;
+  openDP(n.h.length>42?n.h.slice(0,42)+'…':n.h,n.tk.join(', ')+' · '+n.time);
+  callClaude(
+    'You are a financial analyst writing for Vanshika Aggarwal — Senior PM at Amazon Air Cargo in Seattle, beginner investor.\n\nAnalyze this news story:\nHeadline: "'+n.h+'"\nSummary: "'+n.s+'"\nTickers: '+n.tk.join(', ')+'\n\nReturn ONLY valid JSON, no markdown:\n{"why_matters":"3 sentences on significance","immediate_impact":"2 sentences on price impact","historical_parallel":"2 sentences on similar past event","what_to_watch":"2 sentences on follow-up signals","vanshika_relevance":"2 sentences on personal relevance to her Amazon role","investing_lesson":"2 sentences on the investing concept illustrated","affected_tickers":[{"ticker":"XX","impact":"Positive","reason":"one sentence"}]}'
+  ).then(function(raw){
+    try{renderNewsDetail(n,JSON.parse(raw));}catch(e){showErr();}
+  }).catch(showErr);
 }
 
-// DETAIL PANEL
-function openDetail(ticker) {
-  const stock = WATCHLIST.find(w => w.ticker === ticker) || {ticker, name:ticker, cat:'custom', risk:'med', why:'Custom lookup', sector:'—'};
-  document.getElementById('detailTitle').textContent = ticker;
-  document.getElementById('detailSub').textContent = stock.name;
-  document.getElementById('detailBody').innerHTML = `
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <div class="progress-line"><div class="progress-fill"></div></div>
-      <p>Fetching deep analysis for ${ticker}...</p>
-    </div>`;
-  document.getElementById('detailPanel').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  fetchStockDetail(stock);
+// OPEN LESSON DETAIL
+function openLesson(wk,d){
+  var l=LESSONS.find(function(x){return x.wk===wk&&x.d===d;});
+  openDP(l.t,'Week '+wk+' · Day '+d+' · '+l.s);
+  callClaude(
+    'You are a financial educator teaching Vanshika Aggarwal — Senior PM at Amazon Air Cargo in Seattle. She owns digital commerce, standardized cargo products, and pricing. She is a complete beginner investor.\n\nCreate a mobile lesson for: "'+l.t+'" ('+l.s+') — Week '+wk+', Day '+d+'.\n\nReturn ONLY valid JSON, no markdown:\n{"core_concept":"3-4 sentences for a beginner","analogy":"A vivid analogy from Vanshika\'s world — Amazon, logistics, product management, or pricing","key_points":["point1","point2","point3"],"real_example":"2 sentences using a real stock from her watchlist","vanshika_application":"2 sentences on how this applies to her investment journey or career","quiz":{"question":"Multiple choice question","options":["A","B","C","D"],"correct":0,"explanation":"Why correct"},"glossary":[{"term":"term","def":"definition"},{"term":"term2","def":"def2"}]}'
+  ).then(function(raw){
+    try{renderLessonDetail(l,JSON.parse(raw));}catch(e){showErr();}
+  }).catch(showErr);
 }
 
-function openNewsDetail(id) {
-  const news = NEWS_FEED.find(n => n.id === id);
-  if (!news) return;
-  document.getElementById('detailTitle').textContent = news.headline.length > 40 ? news.headline.slice(0,40)+'…' : news.headline;
-  document.getElementById('detailSub').textContent = news.tickers.join(', ') + ' · ' + news.time;
-  document.getElementById('detailBody').innerHTML = `
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <div class="progress-line"><div class="progress-fill"></div></div>
-      <p>Generating full analysis...</p>
-    </div>`;
-  document.getElementById('detailPanel').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  fetchNewsDetail(news);
-}
-
-function openLearnDetail(week, day) {
-  const lesson = LEARN_LESSONS.find(l => l.week===week && l.day===day);
-  document.getElementById('detailTitle').textContent = lesson.title;
-  document.getElementById('detailSub').textContent = `Week ${week} · Day ${day}`;
-  document.getElementById('detailBody').innerHTML = `
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <div class="progress-line"><div class="progress-fill"></div></div>
-      <p>Loading lesson content...</p>
-    </div>`;
-  document.getElementById('detailPanel').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  fetchLearnDetail(lesson);
-}
-
-function closeDetail() {
-  document.getElementById('detailPanel').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-async function callClaude(prompt) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 1000,
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-      messages: [{ role: 'user', content: prompt }]
+async function callClaude(prompt){
+  var res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-6',
+      max_tokens:1000,
+      tools:[{type:'web_search_20250305',name:'web_search'}],
+      messages:[{role:'user',content:prompt}]
     })
   });
-  const data = await res.json();
-  const textBlock = data.content && data.content.find(b => b.type === 'text');
-  const raw = textBlock ? textBlock.text : '';
-  return raw.replace(/```json|```/g, '').trim();
+  var data=await res.json();
+  var tb=data.content&&data.content.find(function(b){return b.type==='text';});
+  return (tb?tb.text:'').replace(/```json|```/g,'').trim();
 }
 
-async function fetchStockDetail(stock) {
-  const prompt = `You are a financial analyst writing for Vanshika Aggarwal — a Senior PM at Amazon Air Cargo in Seattle, pursuing L7 promotion, who owns work in digital commerce, standardized products, and pricing. She is a complete beginner investor learning about stocks. Her watchlist includes AMZN, MSFT, NVDA, GOOGL, UPS, FDX, DAL, NEE, ENPH, TSLA, BEP, VOO, XLI, ICLN.
-
-Provide a deep analysis for ${stock.ticker} (${stock.name}) in ${stock.sector}.
-
-Return ONLY valid JSON, no markdown:
-{
-  "price_snapshot": { "current": "$XXX", "change_today": "+X.X%", "week_change": "+X.X%", "52w_high": "$XXX", "52w_low": "$XXX" },
-  "what_happened_today": "2 sentences on recent price movement and why",
-  "business_summary": "2 sentences on what this company does and how it makes money",
-  "why_it_matters_to_vanshika": "2 sentences connecting this stock to her work at Amazon Air Cargo or her industry",
-  "historical_context": "2 sentences on how this stock has performed over 3-5 years and key turning points",
-  "forecast": { "direction": "Bullish / Bearish / Neutral", "target": "$XXX (12-month analyst consensus)", "reasoning": "2 sentences on what drives the forecast" },
-  "key_risks": ["risk 1", "risk 2", "risk 3"],
-  "beginner_lesson": "2 sentences explaining one investing concept this stock illustrates well, in plain English for a beginner",
-  "action": "Watch / Research more / Strong hold / Avoid for now"
-}`;
-
-  try {
-    const raw = await callClaude(prompt);
-    const d = JSON.parse(raw);
-    renderStockDetail(stock, d);
-  } catch(e) {
-    document.getElementById('detailBody').innerHTML = `<div style="padding:20px;"><div style="background:var(--red-bg);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--red);">Could not load analysis. Check your connection and try again.</div></div>`;
-  }
+function showErr(){
+  document.getElementById('dp-body').innerHTML='<div style="padding:20px;"><div style="background:var(--rbg);border:0.5px solid var(--rb);border-radius:var(--rads);padding:12px 14px;font-size:13px;color:var(--r);">Could not load analysis. Check connection and try again.</div></div>';
 }
 
-async function fetchNewsDetail(news) {
-  const prompt = `You are a financial analyst writing for Vanshika Aggarwal — a Senior PM at Amazon Air Cargo in Seattle, beginner investor. Analyze this news story deeply:
-
-Headline: "${news.headline}"
-Summary: "${news.summary}"
-Related tickers: ${news.tickers.join(', ')}
-
-Return ONLY valid JSON, no markdown:
-{
-  "why_this_matters": "3 sentences on why this news is significant for investors",
-  "immediate_impact": "2 sentences on how this affected stock prices and why",
-  "historical_parallel": "2 sentences on a similar event in the past and what happened to stocks",
-  "what_to_watch": "2 sentences on what signals or follow-up events to monitor",
-  "vanshika_relevance": "2 sentences on why this is personally relevant to her role at Amazon Air Cargo or her investment thesis",
-  "investing_lesson": "2 sentences on what investing concept this news illustrates, explained for a beginner",
-  "affected_tickers": [{"ticker":"XX","impact":"Positive/Negative/Neutral","reason":"one sentence"}]
-}`;
-
-  try {
-    const raw = await callClaude(prompt);
-    const d = JSON.parse(raw);
-    renderNewsDetail(news, d);
-  } catch(e) {
-    document.getElementById('detailBody').innerHTML = `<div style="padding:20px;"><div style="background:var(--red-bg);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--red);">Could not load analysis. Try again.</div></div>`;
-  }
+function renderStock(st,d){
+  var ps=d.price_snapshot||{};var up=(ps.change_today||'').charAt(0)==='+';
+  var fd=d.forecast||{};var fdir=fd.direction||'Neutral';
+  var fc={Bullish:'var(--g)',Bearish:'var(--r)',Neutral:'var(--am)'}[fdir]||'var(--am)';
+  var ac={'Strong hold':'var(--g)','Watch':'var(--am)','Research more':'var(--acc)','Avoid for now':'var(--r)'}[d.action]||'var(--t2)';
+  document.getElementById('dp-body').innerHTML=
+    '<div class="ds"><div class="mg2">'+
+    '<div class="mb"><div class="mb-l">Current price</div><div class="mb-v">'+(ps.current||'—')+'</div><div class="mb-s" style="color:'+(up?'var(--g)':'var(--r)')+'">'+(ps.change_today||'')+'</div></div>'+
+    '<div class="mb"><div class="mb-l">This week</div><div class="mb-v">'+(ps.week_change||'—')+'</div></div>'+
+    '<div class="mb"><div class="mb-l">52w high</div><div class="mb-v">'+(ps.high_52w||'—')+'</div></div>'+
+    '<div class="mb"><div class="mb-l">52w low</div><div class="mb-v">'+(ps.low_52w||'—')+'</div></div></div></div>'+
+    '<div class="ds"><div class="ds-t">Why it moved today</div><div class="db"><p>'+(d.what_happened_today||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">What this company does</div><div class="db"><p>'+(d.business_summary||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Why it\'s on your watchlist</div><div class="db" style="background:rgba(79,142,247,0.05);border-color:rgba(79,142,247,0.2);"><p>'+(d.why_vanshika||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Historical context</div><div class="db"><p>'+(d.historical_context||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">12-month forecast</div><div class="db" style="border-color:'+fc+'44;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;"><span style="font-size:15px;font-weight:700;color:'+fc+'">'+fdir+'</span><span style="font-size:13px;color:var(--t2);">· Target: <strong style="color:var(--t)">'+(fd.target||'—')+'</strong></span></div><p>'+(fd.reasoning||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Key risks</div>'+(d.key_risks||[]).map(function(r){return '<div class="db" style="margin-bottom:5px;"><p>⚠ '+r+'</p></div>';}).join('')+'</div>'+
+    '<div class="ds"><div class="ds-t">Beginner lesson</div><div class="db" style="background:var(--tlbg);border-color:rgba(26,188,156,0.2);"><p>💡 '+(d.beginner_lesson||'—')+'</p></div></div>'+
+    '<div class="ds"><div style="background:var(--bg2);border:0.5px solid var(--b2);border-radius:var(--rad);padding:13px;display:flex;align-items:center;justify-content:space-between;">'+
+    '<div><div style="font-size:10px;color:var(--t3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;">Suggested action</div>'+
+    '<div style="font-size:16px;font-weight:700;color:'+ac+'">'+(d.action||'—')+'</div></div>'+
+    '<div style="font-size:11px;color:var(--t3);text-align:right;max-width:150px;line-height:1.4;">Based on your beginner level and goals</div></div></div>';
 }
 
-async function fetchLearnDetail(lesson) {
-  const prompt = `You are a financial educator teaching Vanshika Aggarwal — a Senior PM at Amazon Air Cargo in Seattle, complete beginner investor. She owns work in digital commerce, standardized cargo products, and pricing strategy.
-
-Create a mobile-optimized lesson for: "${lesson.title}" (${lesson.sub}) — Week ${lesson.week}, Day ${lesson.day}.
-
-Return ONLY valid JSON, no markdown:
-{
-  "core_concept": "3-4 sentences explaining the concept clearly for a beginner",
-  "analogy": "A vivid analogy connecting this concept to something from Vanshika's world — Amazon, logistics, product management, or pricing",
-  "key_points": ["point 1", "point 2", "point 3"],
-  "real_example": "2 sentences using a real company from her watchlist to illustrate the concept",
-  "vanshika_application": "2 sentences on how this concept applies to her personal investment journey or career",
-  "quiz": { "question": "A multiple choice question", "options": ["A","B","C","D"], "correct": 0, "explanation": "Why this is correct" },
-  "glossary": [{"term":"term","def":"definition"},{"term":"term","def":"definition"}]
-}`;
-
-  try {
-    const raw = await callClaude(prompt);
-    const d = JSON.parse(raw);
-    renderLearnDetail(lesson, d);
-  } catch(e) {
-    document.getElementById('detailBody').innerHTML = `<div style="padding:20px;"><div style="background:var(--red-bg);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--red);">Could not load lesson. Try again.</div></div>`;
-  }
+function renderNewsDetail(n,d){
+  var sc={Positive:'s-pos',Negative:'s-neg',Neutral:'s-neu'}[n.sent]||'s-neu';
+  document.getElementById('dp-body').innerHTML=
+    '<div class="ds"><span class="cat-tag ct-'+n.c+'">'+n.c+'</span> <span style="font-size:11px;color:var(--t3);">'+n.time+'</span>'+
+    '<div style="font-size:15px;font-weight:600;color:var(--t);line-height:1.4;margin:8px 0 6px;">'+n.h+'</div>'+
+    '<div style="font-size:13px;color:var(--t2);line-height:1.5;">'+n.s+'</div></div>'+
+    '<div class="ds"><div class="ds-t">Why this matters</div><div class="db"><p>'+(d.why_matters||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Immediate market impact</div><div class="db"><p>'+(d.immediate_impact||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Historical parallel</div><div class="db" style="background:var(--pubg);border-color:rgba(123,92,240,0.2);"><p>'+(d.historical_parallel||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">What to watch next</div><div class="db"><p>'+(d.what_to_watch||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Relevant to your Amazon work</div><div class="db" style="background:rgba(79,142,247,0.05);border-color:rgba(79,142,247,0.2);"><p>'+(d.vanshika_relevance||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Investing lesson</div><div class="db" style="background:var(--tlbg);border-color:rgba(26,188,156,0.2);"><p>💡 '+(d.investing_lesson||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Affected tickers</div>'+(d.affected_tickers||[]).map(function(tk){
+      var c={Positive:'var(--g)',Negative:'var(--r)',Neutral:'var(--am)'}[tk.impact]||'var(--t2)';
+      return '<div class="db" style="margin-bottom:5px;display:flex;align-items:flex-start;gap:10px;"><span style="font-size:14px;font-weight:700;color:'+c+';min-width:44px;">'+tk.ticker+'</span><span style="font-size:12px;color:var(--t2);line-height:1.4;">'+tk.reason+'</span></div>';
+    }).join('')+'</div>';
 }
 
-function renderStockDetail(stock, d) {
-  const ps = d.price_snapshot || {};
-  const up = (ps.change_today||'').startsWith('+');
-  const fDir = d.forecast?.direction || 'Neutral';
-  const fColor = fDir==='Bullish'?'var(--green)':fDir==='Bearish'?'var(--red)':'var(--amber)';
-  const actionColor = {
-    'Strong hold':'var(--green)', 'Watch':'var(--amber)',
-    'Research more':'var(--accent)', 'Avoid for now':'var(--red)'
-  }[d.action] || 'var(--text2)';
-
-  document.getElementById('detailBody').innerHTML = `
-    <div class="detail-section">
-      <div class="metrics-grid">
-        <div class="metric-box"><div class="metric-label">Current price</div><div class="metric-val">${ps.current||'—'}</div><div class="metric-sub" style="color:${up?'var(--green)':'var(--red)'}">${ps.change_today||''} today</div></div>
-        <div class="metric-box"><div class="metric-label">This week</div><div class="metric-val">${ps.week_change||'—'}</div></div>
-        <div class="metric-box"><div class="metric-label">52-week high</div><div class="metric-val">${ps.52w_high||'—'}</div></div>
-        <div class="metric-box"><div class="metric-label">52-week low</div><div class="metric-val">${ps.52w_low||'—'}</div></div>
-      </div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Why it moved today</div>
-      <div class="detail-block"><p>${d.what_happened_today||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">What this company does</div>
-      <div class="detail-block"><p>${d.business_summary||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Why it's on your watchlist</div>
-      <div class="detail-block" style="border-color:rgba(79,142,247,0.2);background:rgba(79,142,247,0.05);"><p>${d.why_it_matters_to_vanshika||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Historical context</div>
-      <div class="detail-block"><p>${d.historical_context||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">12-month forecast</div>
-      <div class="detail-block" style="border-color:${fColor}33;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-          <span style="font-size:14px;font-weight:700;color:${fColor};">${fDir}</span>
-          <span style="font-size:13px;color:var(--text2);">· Target: <strong style="color:var(--text)">${d.forecast?.target||'—'}</strong></span>
-        </div>
-        <p>${d.forecast?.reasoning||'—'}</p>
-      </div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Key risks to watch</div>
-      ${(d.key_risks||[]).map(r=>`<div class="detail-block" style="margin-bottom:6px;"><p>⚠ ${r}</p></div>`).join('')}
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Beginner lesson from this stock</div>
-      <div class="detail-block" style="background:var(--teal-bg);border-color:rgba(26,188,156,0.2);"><p>💡 ${d.beginner_lesson||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div style="background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:14px;display:flex;align-items:center;justify-content:space-between;">
-        <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Suggested action</div><div style="font-size:16px;font-weight:700;color:${actionColor};">${d.action||'—'}</div></div>
-        <div style="font-size:11px;color:var(--text3);text-align:right;max-width:160px;line-height:1.4;">Based on your current beginner level and investment goals</div>
-      </div>
-    </div>`;
+function renderLessonDetail(l,d){
+  var qDone=false;
+  var opts=(d.quiz&&d.quiz.options)||[];
+  var correct=(d.quiz&&d.quiz.correct)||0;
+  var expl=(d.quiz&&d.quiz.explanation)||'';
+  document.getElementById('dp-body').innerHTML=
+    '<div class="ds">'+
+    '<div style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--ambg);color:var(--am);margin-bottom:8px;">Week '+l.wk+' · Day '+l.d+'</div>'+
+    '<div style="font-size:15px;font-weight:700;color:var(--t);margin-bottom:3px;">'+l.t+'</div>'+
+    '<div style="font-size:12px;color:var(--t3);">'+l.s+'</div></div>'+
+    '<div class="ds"><div class="ds-t">Core concept</div><div class="db"><p>'+(d.core_concept||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Analogy from your world</div><div class="db" style="background:rgba(46,204,113,0.05);border-color:rgba(46,204,113,0.2);"><p>🌱 '+(d.analogy||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Key points</div>'+
+    (d.key_points||[]).map(function(p,i){return '<div class="db" style="margin-bottom:5px;display:flex;gap:9px;"><span style="color:var(--acc);font-weight:700;font-size:13px;flex-shrink:0;">'+(i+1)+'</span><p>'+p+'</p></div>';}).join('')+'</div>'+
+    '<div class="ds"><div class="ds-t">Real example from your watchlist</div><div class="db" style="background:rgba(79,142,247,0.05);border-color:rgba(79,142,247,0.2);"><p>'+(d.real_example||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">How this applies to you</div><div class="db" style="background:var(--tlbg);border-color:rgba(26,188,156,0.2);"><p>💡 '+(d.vanshika_application||'—')+'</p></div></div>'+
+    '<div class="ds"><div class="ds-t">Quick quiz</div>'+
+    '<div style="background:var(--bg2);border:0.5px solid var(--b);border-radius:var(--rad);padding:13px;">'+
+    '<div style="font-size:13px;font-weight:600;color:var(--t);margin-bottom:10px;">'+(d.quiz&&d.quiz.question||'—')+'</div>'+
+    '<div id="qopts">'+opts.map(function(o,i){
+      return '<button class="qbtn" id="qb'+i+'" onclick="doQuiz('+i+','+correct+',\''+expl.replace(/'/g,"\\'")+'\')">'+ o+'</button>';
+    }).join('')+'</div>'+
+    '<div id="qfb" style="display:none;margin-top:8px;padding:10px 12px;border-radius:var(--rads);font-size:13px;"></div></div></div>'+
+    '<div class="ds"><div class="ds-t">Glossary</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">'+
+    (d.glossary||[]).map(function(g){return '<div style="background:var(--bg2);border:0.5px solid var(--b);border-radius:var(--rads);padding:9px 11px;"><div style="font-size:11px;font-weight:600;color:var(--t);margin-bottom:2px;">'+g.term+'</div><div style="font-size:11px;color:var(--t3);line-height:1.4;">'+g.def+'</div></div>';}).join('')+
+    '</div></div>';
 }
 
-function renderNewsDetail(news, d) {
-  const sentColor = {Positive:'var(--green)',Negative:'var(--red)',Neutral:'var(--amber)'}[news.sentiment]||'var(--text2)';
-  document.getElementById('detailBody').innerHTML = `
-    <div class="detail-section">
-      <div style="margin-bottom:10px;">
-        <span class="nc-cat cat-${news.cat}">${news.cat}</span>
-        <span style="font-size:11px;color:var(--text3);margin-left:8px;">${news.time}</span>
-      </div>
-      <div style="font-size:15px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:8px;">${news.headline}</div>
-      <div style="font-size:13px;color:var(--text2);line-height:1.5;">${news.summary}</div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Why this matters</div>
-      <div class="detail-block"><p>${d.why_this_matters||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Immediate market impact</div>
-      <div class="detail-block"><p>${d.immediate_impact||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Historical parallel</div>
-      <div class="detail-block" style="background:var(--purple-bg);border-color:rgba(123,92,240,0.2);"><p>${d.historical_parallel||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">What to watch next</div>
-      <div class="detail-block"><p>${d.what_to_watch||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Relevant to your Amazon work</div>
-      <div class="detail-block" style="background:rgba(79,142,247,0.05);border-color:rgba(79,142,247,0.2);"><p>${d.vanshika_relevance||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Investing lesson</div>
-      <div class="detail-block" style="background:var(--teal-bg);border-color:rgba(26,188,156,0.2);"><p>💡 ${d.investing_lesson||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Affected tickers</div>
-      ${(d.affected_tickers||[]).map(t=>{
-        const c = {Positive:'var(--green)',Negative:'var(--red)',Neutral:'var(--amber)'}[t.impact]||'var(--text2)';
-        return `<div class="detail-block" style="margin-bottom:6px;display:flex;align-items:flex-start;gap:10px;"><span style="font-size:14px;font-weight:700;color:${c};min-width:44px;">${t.ticker}</span><span style="font-size:12px;color:var(--text2);line-height:1.4;">${t.reason}</span></div>`;
-      }).join('')}
-    </div>`;
+function doQuiz(idx,correct,expl){
+  var btns=document.querySelectorAll('.qbtn');
+  btns.forEach(function(b){b.disabled=true;});
+  btns[correct].classList.add('qc');
+  if(idx!==correct)btns[idx].classList.add('qw');
+  var fb=document.getElementById('qfb');
+  fb.style.display='block';
+  fb.style.background=idx===correct?'var(--gbg)':'var(--rbg)';
+  fb.style.color=idx===correct?'var(--g)':'var(--r)';
+  fb.textContent=expl;
 }
 
-function renderLearnDetail(lesson, d) {
-  let quizAnswered = false;
-  document.getElementById('detailBody').innerHTML = `
-    <div class="detail-section">
-      <div style="display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--amber-bg);color:var(--amber);margin-bottom:10px;">Week ${lesson.week} · Day ${lesson.day}</div>
-      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;">${lesson.title}</div>
-      <div style="font-size:12px;color:var(--text3);">${lesson.sub}</div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Core concept</div>
-      <div class="detail-block"><p>${d.core_concept||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Analogy from your world</div>
-      <div class="detail-block" style="background:rgba(46,204,113,0.05);border-color:rgba(46,204,113,0.2);"><p>🌱 ${d.analogy||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Key points</div>
-      ${(d.key_points||[]).map((p,i)=>`<div class="detail-block" style="margin-bottom:6px;display:flex;gap:10px;"><span style="color:var(--accent);font-weight:700;font-size:13px;">${i+1}</span><p>${p}</p></div>`).join('')}
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Real example from your watchlist</div>
-      <div class="detail-block" style="background:rgba(79,142,247,0.05);border-color:rgba(79,142,247,0.2);"><p>${d.real_example||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">How this applies to you</div>
-      <div class="detail-block" style="background:var(--teal-bg);border-color:rgba(26,188,156,0.2);"><p>💡 ${d.vanshika_application||'—'}</p></div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Quick quiz</div>
-      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;" id="quizBox">
-        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;">${d.quiz?.question||'—'}</div>
-        <div id="quizOpts">
-          ${(d.quiz?.options||[]).map((o,i)=>`<button onclick="answerLearnQuiz(${i},${d.quiz?.correct||0},'${(d.quiz?.explanation||'').replace(/'/g,"\\'")}',${d.quiz?.options?.length||4})" style="display:block;width:100%;text-align:left;padding:9px 12px;border:0.5px solid var(--border2);border-radius:8px;background:transparent;color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:6px;font-family:var(--font);">${o}</button>`).join('')}
-        </div>
-        <div id="quizFeedback" style="display:none;margin-top:8px;padding:10px 12px;border-radius:8px;font-size:13px;"></div>
-      </div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Glossary</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        ${(d.glossary||[]).map(g=>`<div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;padding:10px 12px;"><div style="font-size:11px;font-weight:600;color:var(--text);margin-bottom:3px;">${g.term}</div><div style="font-size:11px;color:var(--text3);line-height:1.4;">${g.def}</div></div>`).join('')}
-      </div>
-    </div>`;
-}
-
-function answerLearnQuiz(idx, correct, explanation, total) {
-  const opts = document.querySelectorAll('#quizOpts button');
-  opts.forEach((o,i) => {
-    o.disabled = true;
-    if (i === correct) o.style.cssText += ';background:var(--green-bg);border-color:var(--green-border);color:var(--green);';
-    else if (i === idx && idx !== correct) o.style.cssText += ';background:var(--red-bg);border-color:var(--red-border);color:var(--red);';
-  });
-  const fb = document.getElementById('quizFeedback');
-  fb.style.display = 'block';
-  fb.style.background = idx===correct ? 'var(--green-bg)' : 'var(--red-bg)';
-  fb.style.color = idx===correct ? 'var(--green)' : 'var(--red)';
-  fb.textContent = explanation;
-}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDP();});
 
 // INIT
-renderTickerStrip();
-renderIndustryCards();
-renderHomeNews();
-renderNewsFeed();
-renderWatchlist();
+buildHome();
+renderNews();
+renderWL();
 renderLearn();
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
 </script>
 </body>
 </html>
