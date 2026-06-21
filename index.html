@@ -272,7 +272,9 @@ var WL=[
   {t:'XLI',n:'Industrial Select ETF',c:'etf',r:'low',w:'Your industry in one ticker',s:'Index ETF'},
   {t:'ICLN',n:'iShares Clean Energy ETF',c:'etf',r:'med',w:'100+ clean energy companies diversified',s:'Clean ETF'},
 ];
-var CHG={AMZN:'+1.2%',MSFT:'+0.8%',NVDA:'+3.1%',GOOGL:'-0.4%',UPS:'-0.7%',FDX:'+0.3%',DAL:'+1.8%',NEE:'-0.5%',ENPH:'+2.4%',TSLA:'+1.1%',BEP:'-0.2%',VOO:'+0.6%',XLI:'+0.4%',ICLN:'+1.7%'};
+var CHG={};
+var FKEY=localStorage.getItem('fhkey')||'d8rlnrhr01qnkitoiqr0d8rlnrhr01qnkitoiqrg';
+localStorage.setItem('fhkey',FKEY);
 var LOGIC={AMZN:'Pre-earnings momentum; analysts raised targets citing AWS acceleration',MSFT:'Azure AI adoption beat; Copilot seat growth ahead of internal forecasts',NVDA:'Record $26B datacenter revenue; full-year guidance raised above consensus',GOOGL:'DOJ antitrust ruling overhang; investors pricing in remedy uncertainty',UPS:'FedEx earnings miss created sector read-through; sympathy selling',FDX:'Slight bounce after -8% guidance cut; some investors buying the dip',DAL:'Q3 profit outlook raised; summer international bookings up 12%',NEE:'IRA credit review uncertainty; mild rate-sensitivity selling',ENPH:'Better solar installation data; Fed rate cut signal boosted growth names',TSLA:'EV sentiment recovery; Fed rate cut lowers consumer financing costs',BEP:'Dividend consolidation after rate-cut rally; stable yield holding floor',VOO:'Broad Fed rate cut signal lifted S&P 500 across sectors',XLI:'Positive macro sentiment; industrials rallied on Fed dovish signal',ICLN:'Rate-sensitive clean energy surged on Fed rate cut announcement'};
 var NEWS=[
   {id:1,c:'logistics',h:'Amazon Air broadens cargo reach with Jacksonville hub, opens freight to third parties',s:'Amazon Air Cargo opened a new hub at Jacksonville International Airport and is now selling excess capacity to third-party freight customers — a major strategic shift for ACAR beyond internal Amazon deliveries.',sent:'Positive',time:'May 2026',tk:['AMZN'],rel:'Directly relevant to your work at ACAR',src:'Supply Chain Dive',url:'https://www.supplychaindive.com/news/amazon-air-broadens-air-cargo-reach-to-jacksonville/811617/'},
@@ -334,7 +336,7 @@ function buildHome(){
   strip.innerHTML=['AMZN','MSFT','NVDA','GOOGL','UPS','NEE','TSLA','VOO'].map(function(t){
     var chg=CHG[t]||'+0.0%';var up=chg[0]==='+';
     var lg=LOGIC[t]||'';
-    return '<div class="tpill" onclick="openStock(\''+t+'\')" title="'+lg+'"><div class="tp-s">'+t+'</div><div class="tp-c '+(up?'up':'dn')+'">'+chg+'</div></div>';
+    return '<div class="tpill" onclick="openStock(\''+t+'\')" title="'+lg+'"><div class="tp-s">'+t+'</div><div class="tp-c '+(up?'up':'dn')+'" id="tpc-'+t+'">'+chg+'</div></div>';
   }).join('');
 
   // industry cards
@@ -403,7 +405,7 @@ function renderWL(){
     return '<div class="wl-row" onclick="openStock(\''+w.t+'\')">'+
       '<span class="wl-sym">'+w.t+'</span>'+
       '<div class="wl-info"><div class="wl-nm">'+w.n+'</div><div class="wl-w">'+w.w+'</div></div>'+
-      '<div class="wl-rt" style="text-align:right;max-width:120px;"><div class="wl-chg '+(up?'up':'dn')+'">'+chg+'</div>'+
+      '<div class="wl-rt" style="text-align:right;max-width:120px;"><div class="wl-chg '+(up?'up':'dn')+'" id="wlc-'+w.t+'">'+chg+'</div>'+
       '<span class="rb '+rc[w.r]+'">'+rl[w.r]+'</span></div></div>'+
       '<div style="font-size:10px;color:var(--t3);padding:3px 16px 8px;border-bottom:0.5px solid var(--b);line-height:1.4;">'+(LOGIC[w.t]||'')+'</div>';
   }).join('');
@@ -483,7 +485,18 @@ function openNews(id){
   if(!n)return;
   openDP(n.h.length>42?n.h.slice(0,42)+'…':n.h,n.tk.join(', ')+' · '+n.time);
   var d=ND[id];
-  if(d){renderNewsDetail(n,d);}else{showErr();}
+  if(d){renderNewsDetail(n,d);}
+  else{
+    var sc={'Positive':'s-pos','Negative':'s-neg','Neutral':'s-neu'}[n.sent]||'s-neu';
+    document.getElementById('dp-body').innerHTML=
+      '<div style="padding:15px">'+
+      '<div class="ds"><div style="font-size:15px;font-weight:600;color:var(--t);line-height:1.5;margin-bottom:8px;">'+n.h+'</div>'+
+      '<div style="font-size:12px;color:var(--t3);margin-bottom:10px;">'+n.src+' · '+n.time+'</div>'+
+      '<div style="font-size:13px;color:var(--t2);line-height:1.6;">'+n.s+'</div></div>'+
+      (n.url?'<div class="ds"><a href="'+n.url+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;">📰 Read full article ↗</a></div>':'')+
+      '<div class="ds"><div style="font-size:11px;color:var(--t3);">Live news · tap any word to Ask Claude for more context</div></div>'+
+      '</div>';
+  }
 }
 
 // OPEN LESSON DETAIL
@@ -585,6 +598,76 @@ function doQuiz(idx,correct,expl){
 }
 
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDP();});
+
+// LIVE DATA (Finnhub)
+function fhGet(path,cb){
+  fetch('https://finnhub.io/api/v1'+path+'&token='+FKEY)
+    .then(function(r){return r.json();}).then(cb).catch(function(){});
+}
+function timeAgo(ts){
+  var diff=Math.floor(Date.now()/1000)-ts;
+  if(diff<3600)return Math.floor(diff/60)+'m ago';
+  if(diff<86400)return Math.floor(diff/3600)+'h ago';
+  return Math.floor(diff/86400)+'d ago';
+}
+function applyPrice(t,dp,price){
+  var up=dp>=0;
+  var str=(up?'+':'')+dp.toFixed(2)+'%';
+  CHG[t]=str;
+  var pStr='$'+price.toFixed(2);
+  var tpc=document.getElementById('tpc-'+t);
+  if(tpc){tpc.textContent=str;tpc.className='tp-c '+(up?'up':'dn');}
+  var wlc=document.getElementById('wlc-'+t);
+  if(wlc){wlc.textContent=str;wlc.className='wl-chg '+(up?'up':'dn');}
+  LOGIC[t]=pStr+' · '+str+' today';
+}
+function fetchQuotes(){
+  var dot=document.getElementById('live-dot');
+  if(dot)dot.style.opacity='0.4';
+  var done=0,total=WL.length;
+  WL.forEach(function(w){
+    fhGet('/quote?symbol='+w.t,function(d){
+      if(d&&d.c&&d.dp!==undefined)applyPrice(w.t,d.dp,d.c);
+      done++;
+      if(done===total&&dot){dot.style.opacity='1';dot.title='Live · updated '+new Date().toLocaleTimeString();}
+    });
+  });
+}
+function fetchLiveNews(){
+  var pad=function(n){return n<10?'0'+n:''+n;};
+  var fmt=function(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());};
+  var now=new Date();
+  var from=new Date(now-7*24*60*60*1000);
+  var toStr=fmt(now),fromStr=fmt(from);
+  var tickers=['AMZN','NVDA','MSFT','NEE','DAL','TSLA','GOOGL','ENPH'];
+  var catMap={AMZN:'logistics',DAL:'logistics',NEE:'energy',ENPH:'energy',NVDA:'tech',MSFT:'tech',GOOGL:'tech',TSLA:'tech'};
+  var all=[],seen={},pending=tickers.length;
+  tickers.forEach(function(t,i){
+    setTimeout(function(){
+      fhGet('/company-news?symbol='+t+'&from='+fromStr+'&to='+toStr,function(articles){
+        if(Array.isArray(articles)){
+          articles.slice(0,3).forEach(function(a){
+            if(!seen[a.id]&&a.headline&&a.url){
+              seen[a.id]=true;
+              all.push({id:a.id,c:catMap[t]||'tech',
+                h:a.headline.length>90?a.headline.slice(0,90)+'…':a.headline,
+                s:a.summary?(a.summary.length>180?a.summary.slice(0,180)+'…':a.summary):a.headline,
+                sent:'Neutral',time:timeAgo(a.datetime),tk:[t],
+                rel:'Related to your '+t+' holding',src:a.source,url:a.url});
+            }
+          });
+        }
+        pending--;
+        if(pending===0&&all.length>0){
+          all.sort(function(a,b){return b.id-a.id;});
+          NEWS=all.slice(0,10).map(function(n,i){return Object.assign({},n,{id:n.id});});
+          renderNews();
+          document.getElementById('home-news').innerHTML=NEWS.slice(0,4).map(ncHTML).join('');
+        }
+      });
+    },i*250);
+  });
+}
 
 // GLOSSARY
 var GL={
@@ -703,6 +786,14 @@ renderNews();
 renderWL();
 renderLearn();
 _initSel();
+// inject live dot into ticker strip
+(function(){
+  var ts=document.getElementById('tstrip');
+  if(ts){var dot=document.createElement('span');dot.id='live-dot';dot.title='Live prices';dot.style.cssText='display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;color:var(--g);padding:0 8px;opacity:0.5;white-space:nowrap;';dot.innerHTML='<span style="width:5px;height:5px;border-radius:50%;background:var(--g);display:inline-block;"></span>LIVE';ts.appendChild(dot);}
+})();
+fetchQuotes();
+fetchLiveNews();
+setInterval(fetchQuotes,15000);
 </script>
 </body>
 </html>
